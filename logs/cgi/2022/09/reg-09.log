@@ -1,0 +1,177 @@
+[2022-09-09 17:09:14]--[src_cgi/reg_cgi.c:236]--buf = {
+    "email": "abcg@qq.com",
+    "firstPwd": "e10adc3949ba59abbe56e057f20f883e",
+    "nickName": "111111",
+    "phone": "11111111113",
+    "userName": "lxl"
+}
+
+[2022-09-09 17:09:14]--[src_cgi/reg_cgi.c:236]--buf = {
+    "email": "abcg@qq.com",
+    "firstPwd": "e10adc3949ba59abbe56e057f20f883e",
+    "nickName": "111111",
+    "phone": "11111111113",
+    "userName": "lxl"
+}
+
+[2022-09-09 17:09:14]--[src_cgi/reg_cgi.c:236]--buf = {
+    "email": "abcg@qq.com",
+    "firstPwd": "e10adc3949ba59abbe56e057f20f883e",
+    "nickName": "111111",
+    "phone": "11111111113",
+    "userName": "lxl"
+}
+
+[2022-09-09 17:09:14]--[src_cgi/reg_cgi.c:236]--buf = {
+    "email": "abcg@qq.com",
+    "firstPwd": "e10adc3949ba59abbe56e057f20f883e",
+    "nickName": "111111",
+    "phone": "11111111113",
+    "userName": "lxl"
+}
+
+[2022-09-09 17:09:14]--[src_cgi/reg_cgi.c:236]--buf = {
+    "email": "abcg@qq.com",
+    "firstPwd": "e10adc3949ba59abbe56e057f20f883e",
+    "nickName": "111111",
+    "phone": "11111111113",
+    "userName": "lxl"
+}
+
+[2022-09-09 17:09:14]--[src_cgi/reg_cgi.c:236]--buf = {
+    "email": "abcg@qq.com",
+    "firstPwd": "e10adc3949ba59abbe56e057f20f883e",
+    "nickName": "111111",
+    "phone": "11111111113",
+    "userName": "lxl"
+}
+
+[2022-09-09 17:09:14]--[src_cgi/reg_cgi.c:236]--buf = {
+    "email": "abcg@qq.com",
+    "firstPwd": "e10adc3949ba59abbe56e057f20f883e",
+    "nickName": "111111",
+    "phone": "11111111113",
+    "userName": "lxl"
+}
+
+[2022-09-09 17:09:14]--[src_cgi/reg_cgi.c:236]--buf = {
+    "email": "abcg@qq.com",
+    "firstPwd": "e10adc3949ba59abbe56e057f20f883e",
+    "nickName": "111111",
+    "phone": "11111111113",
+    "userName": "lxl"
+}
+
+[2022-09-09 17:09:14]--[src_cgi/reg_cgi.c:236]--buf = {
+    "email": "abcg@qq.com",
+    "firstPwd": "e10adc3949ba59abbe56e057f20f883e",
+    "nickName": "111111",
+    "phone": "11111111113",
+    "userName": "lxl"
+}
+
+[2022-09-09 17:09:14]--[src_cgi/reg_cgi.c:236]--buf = {
+    "email": "abcg@qq.com",
+    "firstPwd": "e10adc3949ba59abbe56e057f20f883e",
+    "nickName": "111111",
+    "phone": "11111111113",
+    "userName": "lxl"
+}
+
+[2022-09-09 17:09:51]--[src_cgi/reg_cgi.c:236]--buf = {
+    "email": "abcg@qq.com",
+    "firstPwd": "96e79218965eb72c92a549dd5a330112",
+    "nickName": "111111",
+    "phone": "11111111113",
+    "userName": "lxl"
+}
+
+[2022-09-09 17:26:13]--[src_cgi/reg_cgi.c:236]--buf = {
+    "email": "abc@qq.com",
+    "firstPwd": "e10adc3949ba59abbe56e057f20f883e",
+    "nickName": "lxl",
+    "phone": "11111111111",
+    "userName": "lxl"
+}
+
+[2022-09-09 17:26:27]--[src_cgi/reg_cgi.c:236]--buf = {
+    "email": "abrc@qq.com",
+    "firstPwd": "e10adc3949ba59abbe56e057f20f883e",
+    "nickName": "lxl",
+    "phone": "21111111111",
+    "userName": "lxl"
+}
+
+[2022-09-09 17:35:49]--[src_cgi/reg_cgi.c:237]--buf = {
+    "email": "aabc@qq.com",
+    "firstPwd": "e10adc3949ba59abbe56e057f20f883e",
+    "nickName": "lxl",
+    "phone": "11112111111",
+    "userName": "lxl"
+}
+
+[2022-09-09 17:35:49]--[src_cgi/reg_cgi.c:124]--ret =-1[2022-09-09 17:40:00]--[src_cgi/reg_cgi.c:237]--buf = {
+    "email": "aabc@qq.com",
+    "firstPwd": "e10adc3949ba59abbe56e057f20f883e",
+    "nickName": "lxl",
+    "phone": "11112111111",
+    "userName": "lxl"
+}
+
+[2022-09-09 17:40:00]--[src_cgi/reg_cgi.c:124]--ret =-1[2022-09-09 17:43:19]--[src_cgi/reg_cgi.c:237]--buf = {
+    "email": "aabc@qq.com",
+    "firstPwd": "e10adc3949ba59abbe56e057f20f883e",
+    "nickName": "lxl",
+    "phone": "11112111111",
+    "userName": "lxl"
+}
+
+[2022-09-09 17:43:19]--[src_cgi/reg_cgi.c:124]--ret =-1[2022-09-09 17:46:32]--[src_cgi/reg_cgi.c:237]--buf = {
+    "email": "aabc@qq.com",
+    "firstPwd": "e10adc3949ba59abbe56e057f20f883e",
+    "nickName": "lxl",
+    "phone": "11112111111",
+    "userName": "lxl"
+}
+
+[2022-09-09 17:46:32]--[src_cgi/reg_cgi.c:124]--ret =-1[2022-09-09 17:52:20]--[src_cgi/reg_cgi.c:237]--buf = {
+    "email": "aabc@qq.com",
+    "firstPwd": "e10adc3949ba59abbe56e057f20f883e",
+    "nickName": "lxl",
+    "phone": "11112111111",
+    "userName": "lxl"
+}
+
+[2022-09-09 17:52:20]--[src_cgi/reg_cgi.c:124]--ret =-1[2022-09-09 17:57:55]--[src_cgi/reg_cgi.c:237]--buf = {
+    "email": "aabc@qq.com",
+    "firstPwd": "e10adc3949ba59abbe56e057f20f883e",
+    "nickName": "lxl",
+    "phone": "11112111111",
+    "userName": "lxl"
+}
+
+[2022-09-09 17:57:55]--[src_cgi/reg_cgi.c:124]--ret =-1[2022-09-09 17:59:07]--[src_cgi/reg_cgi.c:237]--buf = {
+    "email": "aabc@qq.com",
+    "firstPwd": "e10adc3949ba59abbe56e057f20f883e",
+    "nickName": "lxl",
+    "phone": "11112111111",
+    "userName": "lxl"
+}
+
+[2022-09-09 17:59:07]--[src_cgi/reg_cgi.c:124]--ret =-1[2022-09-09 18:11:51]--[src_cgi/reg_cgi.c:237]--buf = {
+    "email": "aabc@qq.com",
+    "firstPwd": "e10adc3949ba59abbe56e057f20f883e",
+    "nickName": "lxl",
+    "phone": "11112111111",
+    "userName": "lxl"
+}
+
+[2022-09-09 18:11:51]--[src_cgi/reg_cgi.c:124]--ret =-1[2022-09-09 18:21:02]--[src_cgi/reg_cgi.c:237]--buf = {
+    "email": "aabc@qq.com",
+    "firstPwd": "e10adc3949ba59abbe56e057f20f883e",
+    "nickName": "lxl",
+    "phone": "11112111111",
+    "userName": "lxl"
+}
+
+[2022-09-09 18:21:02]--[src_cgi/reg_cgi.c:124]--ret =-1

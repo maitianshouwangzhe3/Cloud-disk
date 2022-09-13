@@ -1,0 +1,230 @@
+[2022-09-10 12:47:21]--[src_cgi/myfiles_cgi.c:40]--mysql:[user=root,pwd=root,database=cloud_disk][2022-09-10 13:10:02]--[src_cgi/myfiles_cgi.c:40]--mysql:[user=root,pwd=root,database=cloud_disk][2022-09-10 13:13:27]--[src_cgi/myfiles_cgi.c:40]--mysql:[user=root,pwd=root,database=cloud_disk][2022-09-10 13:14:43]--[src_cgi/myfiles_cgi.c:496]--cmd = count
+[2022-09-10 13:14:43]--[src_cgi/myfiles_cgi.c:528]--buf = {
+    "token": "a5e2e90d9cb3a0ed4accefd69a37b456",
+    "user": "lwx"
+}
+
+[2022-09-10 13:14:43]--[src_cgi/myfiles_cgi.c:164]--select count from user_file_count where user="lwx" 操作失败
+[2022-09-10 13:14:43]--[src_cgi/myfiles_cgi.c:176]--line = 0
+[2022-09-10 13:15:01]--[src_cgi/myfiles_cgi.c:496]--cmd = count
+[2022-09-10 13:15:01]--[src_cgi/myfiles_cgi.c:528]--buf = {
+    "token": "c6a2f229964153e2b6a40db9298923c9",
+    "user": "llwwxx"
+}
+
+[2022-09-10 13:15:01]--[src_cgi/myfiles_cgi.c:164]--select count from user_file_count where user="llwwxx" 操作失败
+[2022-09-10 13:15:01]--[src_cgi/myfiles_cgi.c:176]--line = 0
+[2022-09-10 13:15:31]--[src_cgi/myfiles_cgi.c:496]--cmd = count
+[2022-09-10 13:15:31]--[src_cgi/myfiles_cgi.c:528]--buf = {
+    "token": "c6a2f229964153e2b6a40db9298923c9",
+    "user": "llwwxx"
+}
+
+[2022-09-10 13:15:31]--[src_cgi/myfiles_cgi.c:164]--select count from user_file_count where user="llwwxx" 操作失败
+[2022-09-10 13:15:31]--[src_cgi/myfiles_cgi.c:176]--line = 0
+[2022-09-10 13:16:04]--[src_cgi/myfiles_cgi.c:496]--cmd = count
+[2022-09-10 13:16:04]--[src_cgi/myfiles_cgi.c:528]--buf = {
+    "token": "cdfeaeaed324902dcb2160d0039ab9b8",
+    "user": "lxl"
+}
+
+[2022-09-10 13:16:04]--[src_cgi/myfiles_cgi.c:164]--select count from user_file_count where user="lxl" 操作失败
+[2022-09-10 13:16:04]--[src_cgi/myfiles_cgi.c:176]--line = 0
+[2022-09-10 20:39:35]--[src_cgi/myfiles_cgi.c:40]--mysql:[user=root,pwd=root,database=cloud_disk][2022-09-10 20:40:02]--[src_cgi/myfiles_cgi.c:497]--cmd = count
+[2022-09-10 20:40:02]--[src_cgi/myfiles_cgi.c:529]--buf = {
+    "token": "3f0a4319d9abf7f0e7c83ad8c29d0b2b",
+    "user": "lxl"
+}
+
+[2022-09-10 20:40:02]--[src_cgi/myfiles_cgi.c:81]--child1->valuestring = lxl
+[2022-09-10 20:40:02]--[src_cgi/myfiles_cgi.c:93]--child2->valuestring = 3f0a4319d9abf7f0e7c83ad8c29d0b2b
+[2022-09-10 20:40:02]--[src_cgi/myfiles_cgi.c:162]--ret2=1
+[2022-09-10 20:40:02]--[src_cgi/myfiles_cgi.c:165]--select count from user_file_count where user="lxl" 操作失败
+[2022-09-10 20:40:02]--[src_cgi/myfiles_cgi.c:177]--line = 0
+[2022-09-10 20:40:20]--[src_cgi/myfiles_cgi.c:497]--cmd = count
+[2022-09-10 20:40:20]--[src_cgi/myfiles_cgi.c:529]--buf = {
+    "token": "3f0a4319d9abf7f0e7c83ad8c29d0b2b",
+    "user": "lxl"
+}
+
+[2022-09-10 20:40:20]--[src_cgi/myfiles_cgi.c:81]--child1->valuestring = lxl
+[2022-09-10 20:40:20]--[src_cgi/myfiles_cgi.c:93]--child2->valuestring = 3f0a4319d9abf7f0e7c83ad8c29d0b2b
+[2022-09-10 20:40:20]--[src_cgi/myfiles_cgi.c:162]--ret2=1
+[2022-09-10 20:40:20]--[src_cgi/myfiles_cgi.c:165]--select count from user_file_count where user="lxl" 操作失败
+[2022-09-10 20:40:20]--[src_cgi/myfiles_cgi.c:177]--line = 0
+[2022-09-10 20:40:25]--[src_cgi/myfiles_cgi.c:497]--cmd = count
+[2022-09-10 20:40:25]--[src_cgi/myfiles_cgi.c:529]--buf = {
+    "token": "3f0a4319d9abf7f0e7c83ad8c29d0b2b",
+    "user": "lxl"
+}
+
+[2022-09-10 20:40:25]--[src_cgi/myfiles_cgi.c:81]--child1->valuestring = lxl
+[2022-09-10 20:40:25]--[src_cgi/myfiles_cgi.c:93]--child2->valuestring = 3f0a4319d9abf7f0e7c83ad8c29d0b2b
+[2022-09-10 20:40:25]--[src_cgi/myfiles_cgi.c:162]--ret2=1
+[2022-09-10 20:40:25]--[src_cgi/myfiles_cgi.c:165]--select count from user_file_count where user="lxl" 操作失败
+[2022-09-10 20:40:25]--[src_cgi/myfiles_cgi.c:177]--line = 0
+[2022-09-10 20:42:08]--[src_cgi/myfiles_cgi.c:497]--cmd = count
+[2022-09-10 20:42:08]--[src_cgi/myfiles_cgi.c:529]--buf = {
+    "token": "16a6a85af7e8d505a51bcd25b68daace",
+    "user": "lwx"
+}
+
+[2022-09-10 20:42:08]--[src_cgi/myfiles_cgi.c:81]--child1->valuestring = lwx
+[2022-09-10 20:42:08]--[src_cgi/myfiles_cgi.c:93]--child2->valuestring = 16a6a85af7e8d505a51bcd25b68daace
+[2022-09-10 20:42:08]--[src_cgi/myfiles_cgi.c:162]--ret2=1
+[2022-09-10 20:42:08]--[src_cgi/myfiles_cgi.c:165]--select count from user_file_count where user="lwx" 操作失败
+[2022-09-10 20:42:08]--[src_cgi/myfiles_cgi.c:177]--line = 0
+[2022-09-10 20:42:19]--[src_cgi/myfiles_cgi.c:497]--cmd = count
+[2022-09-10 20:42:19]--[src_cgi/myfiles_cgi.c:529]--buf = {
+    "token": "16a6a85af7e8d505a51bcd25b68daace",
+    "user": "lwx"
+}
+
+[2022-09-10 20:42:19]--[src_cgi/myfiles_cgi.c:81]--child1->valuestring = lwx
+[2022-09-10 20:42:19]--[src_cgi/myfiles_cgi.c:93]--child2->valuestring = 16a6a85af7e8d505a51bcd25b68daace
+[2022-09-10 20:42:19]--[src_cgi/myfiles_cgi.c:162]--ret2=1
+[2022-09-10 20:42:19]--[src_cgi/myfiles_cgi.c:165]--select count from user_file_count where user="lwx" 操作失败
+[2022-09-10 20:42:19]--[src_cgi/myfiles_cgi.c:177]--line = 0
+[2022-09-10 21:16:34]--[src_cgi/myfiles_cgi.c:497]--cmd = count
+[2022-09-10 21:16:34]--[src_cgi/myfiles_cgi.c:529]--buf = {
+    "token": "19d0cc5099cd4afa305ce9f0d13a3f30",
+    "user": "lwx"
+}
+
+[2022-09-10 21:16:34]--[src_cgi/myfiles_cgi.c:81]--child1->valuestring = lwx
+[2022-09-10 21:16:34]--[src_cgi/myfiles_cgi.c:93]--child2->valuestring = 19d0cc5099cd4afa305ce9f0d13a3f30
+[2022-09-10 21:16:34]--[src_cgi/myfiles_cgi.c:162]--ret2=1
+[2022-09-10 21:16:34]--[src_cgi/myfiles_cgi.c:165]--select count from user_file_count where user="lwx" 操作失败
+[2022-09-10 21:16:34]--[src_cgi/myfiles_cgi.c:177]--line = 0
+[2022-09-10 21:16:51]--[src_cgi/myfiles_cgi.c:497]--cmd = count
+[2022-09-10 21:16:51]--[src_cgi/myfiles_cgi.c:529]--buf = {
+    "token": "19d0cc5099cd4afa305ce9f0d13a3f30",
+    "user": "lwx"
+}
+
+[2022-09-10 21:16:51]--[src_cgi/myfiles_cgi.c:81]--child1->valuestring = lwx
+[2022-09-10 21:16:51]--[src_cgi/myfiles_cgi.c:93]--child2->valuestring = 19d0cc5099cd4afa305ce9f0d13a3f30
+[2022-09-10 21:16:51]--[src_cgi/myfiles_cgi.c:162]--ret2=0
+[2022-09-10 21:16:51]--[src_cgi/myfiles_cgi.c:177]--line = 1
+[2022-09-10 21:16:51]--[src_cgi/myfiles_cgi.c:497]--cmd = normal
+[2022-09-10 21:16:51]--[src_cgi/myfiles_cgi.c:529]--buf = {
+    "count": 1,
+    "start": 0,
+    "token": "19d0cc5099cd4afa305ce9f0d13a3f30",
+    "user": "lwx"
+}
+
+[2022-09-10 21:16:51]--[src_cgi/myfiles_cgi.c:549]--user = lwx, token = 19d0cc5099cd4afa305ce9f0d13a3f30, start = 0, count = 1
+[2022-09-10 21:16:51]--[src_cgi/myfiles_cgi.c:307]--select user_file_list.*, file_info.url, file_info.size, file_info.type from file_info, user_file_list where user = 'lwx' and file_info.md5 = user_file_list.md5 limit 0, 1 在操作
+[2022-09-10 21:16:51]--[src_cgi/myfiles_cgi.c:429]--{
+	"files":	[{
+			"user":	"lwx",
+			"md5":	"5b1ee9fb4e61be71e460a742d6939647",
+			"time":	"2022-09-10 21:16:41",
+			"filename":	"Makefile",
+			"share_status":	0,
+			"pv":	0,
+			"url":	"http://10.0.24.12:8888/group1/M00/00/00/CgAYDGMcjjmAKWVhAABEgPHdf7o6083419",
+			"size":	17536,
+			"type":	"null"
+		}]
+}
+[2022-09-10 21:16:54]--[src_cgi/myfiles_cgi.c:497]--cmd = count
+[2022-09-10 21:16:54]--[src_cgi/myfiles_cgi.c:529]--buf = {
+    "token": "19d0cc5099cd4afa305ce9f0d13a3f30",
+    "user": "lwx"
+}
+
+[2022-09-10 21:16:54]--[src_cgi/myfiles_cgi.c:81]--child1->valuestring = lwx
+[2022-09-10 21:16:54]--[src_cgi/myfiles_cgi.c:93]--child2->valuestring = 19d0cc5099cd4afa305ce9f0d13a3f30
+[2022-09-10 21:16:54]--[src_cgi/myfiles_cgi.c:162]--ret2=0
+[2022-09-10 21:16:54]--[src_cgi/myfiles_cgi.c:177]--line = 1
+[2022-09-10 21:16:54]--[src_cgi/myfiles_cgi.c:497]--cmd = normal
+[2022-09-10 21:16:54]--[src_cgi/myfiles_cgi.c:529]--buf = {
+    "count": 1,
+    "start": 0,
+    "token": "19d0cc5099cd4afa305ce9f0d13a3f30",
+    "user": "lwx"
+}
+
+[2022-09-10 21:16:54]--[src_cgi/myfiles_cgi.c:549]--user = lwx, token = 19d0cc5099cd4afa305ce9f0d13a3f30, start = 0, count = 1
+[2022-09-10 21:16:54]--[src_cgi/myfiles_cgi.c:307]--select user_file_list.*, file_info.url, file_info.size, file_info.type from file_info, user_file_list where user = 'lwx' and file_info.md5 = user_file_list.md5 limit 0, 1 在操作
+[2022-09-10 21:16:54]--[src_cgi/myfiles_cgi.c:429]--{
+	"files":	[{
+			"user":	"lwx",
+			"md5":	"5b1ee9fb4e61be71e460a742d6939647",
+			"time":	"2022-09-10 21:16:41",
+			"filename":	"Makefile",
+			"share_status":	0,
+			"pv":	0,
+			"url":	"http://10.0.24.12:8888/group1/M00/00/00/CgAYDGMcjjmAKWVhAABEgPHdf7o6083419",
+			"size":	17536,
+			"type":	"null"
+		}]
+}
+[2022-09-10 21:17:04]--[src_cgi/myfiles_cgi.c:497]--cmd = count
+[2022-09-10 21:17:04]--[src_cgi/myfiles_cgi.c:529]--buf = {
+    "token": "19d0cc5099cd4afa305ce9f0d13a3f30",
+    "user": "lwx"
+}
+
+[2022-09-10 21:17:04]--[src_cgi/myfiles_cgi.c:81]--child1->valuestring = lwx
+[2022-09-10 21:17:04]--[src_cgi/myfiles_cgi.c:93]--child2->valuestring = 19d0cc5099cd4afa305ce9f0d13a3f30
+[2022-09-10 21:17:04]--[src_cgi/myfiles_cgi.c:162]--ret2=0
+[2022-09-10 21:17:04]--[src_cgi/myfiles_cgi.c:177]--line = 1
+[2022-09-10 21:17:04]--[src_cgi/myfiles_cgi.c:497]--cmd = normal
+[2022-09-10 21:17:04]--[src_cgi/myfiles_cgi.c:529]--buf = {
+    "count": 1,
+    "start": 0,
+    "token": "19d0cc5099cd4afa305ce9f0d13a3f30",
+    "user": "lwx"
+}
+
+[2022-09-10 21:17:04]--[src_cgi/myfiles_cgi.c:549]--user = lwx, token = 19d0cc5099cd4afa305ce9f0d13a3f30, start = 0, count = 1
+[2022-09-10 21:17:04]--[src_cgi/myfiles_cgi.c:307]--select user_file_list.*, file_info.url, file_info.size, file_info.type from file_info, user_file_list where user = 'lwx' and file_info.md5 = user_file_list.md5 limit 0, 1 在操作
+[2022-09-10 21:17:04]--[src_cgi/myfiles_cgi.c:429]--{
+	"files":	[{
+			"user":	"lwx",
+			"md5":	"5b1ee9fb4e61be71e460a742d6939647",
+			"time":	"2022-09-10 21:16:41",
+			"filename":	"Makefile",
+			"share_status":	0,
+			"pv":	0,
+			"url":	"http://10.0.24.12:8888/group1/M00/00/00/CgAYDGMcjjmAKWVhAABEgPHdf7o6083419",
+			"size":	17536,
+			"type":	"null"
+		}]
+}
+[2022-09-10 21:17:32]--[src_cgi/myfiles_cgi.c:497]--cmd = count
+[2022-09-10 21:17:32]--[src_cgi/myfiles_cgi.c:529]--buf = {
+    "token": "19d0cc5099cd4afa305ce9f0d13a3f30",
+    "user": "lwx"
+}
+
+[2022-09-10 21:17:32]--[src_cgi/myfiles_cgi.c:81]--child1->valuestring = lwx
+[2022-09-10 21:17:32]--[src_cgi/myfiles_cgi.c:93]--child2->valuestring = 19d0cc5099cd4afa305ce9f0d13a3f30
+[2022-09-10 21:17:32]--[src_cgi/myfiles_cgi.c:162]--ret2=0
+[2022-09-10 21:17:32]--[src_cgi/myfiles_cgi.c:177]--line = 1
+[2022-09-10 21:17:32]--[src_cgi/myfiles_cgi.c:497]--cmd = normal
+[2022-09-10 21:17:32]--[src_cgi/myfiles_cgi.c:529]--buf = {
+    "count": 1,
+    "start": 0,
+    "token": "19d0cc5099cd4afa305ce9f0d13a3f30",
+    "user": "lwx"
+}
+
+[2022-09-10 21:17:32]--[src_cgi/myfiles_cgi.c:549]--user = lwx, token = 19d0cc5099cd4afa305ce9f0d13a3f30, start = 0, count = 1
+[2022-09-10 21:17:32]--[src_cgi/myfiles_cgi.c:307]--select user_file_list.*, file_info.url, file_info.size, file_info.type from file_info, user_file_list where user = 'lwx' and file_info.md5 = user_file_list.md5 limit 0, 1 在操作
+[2022-09-10 21:17:32]--[src_cgi/myfiles_cgi.c:429]--{
+	"files":	[{
+			"user":	"lwx",
+			"md5":	"5b1ee9fb4e61be71e460a742d6939647",
+			"time":	"2022-09-10 21:16:41",
+			"filename":	"Makefile",
+			"share_status":	0,
+			"pv":	0,
+			"url":	"http://10.0.24.12:8888/group1/M00/00/00/CgAYDGMcjjmAKWVhAABEgPHdf7o6083419",
+			"size":	17536,
+			"type":	"null"
+		}]
+}

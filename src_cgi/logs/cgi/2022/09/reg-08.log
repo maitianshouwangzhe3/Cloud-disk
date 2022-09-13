@@ -1,0 +1,11 @@
+[2022-09-08 14:13:51]--[reg_cgi.c:236]--buf = {
+    "email": "abc@qq.com",
+    "firstPwd": "e10adc3949ba59abbe56e057f20f883e",
+    "nickName": "lll",
+    "phone": "11111111111",
+    "userName": "lwx"
+}
+
+[2022-09-08 14:13:51]--[reg_cgi.c:128]--mysql_user = root, mysql_pwd = root, mysql_db = cloud_disk
+[2022-09-08 14:13:51]--[reg_cgi.c:141]--user = lwx, nick_name = lll, pwd = e10adc3949ba59abbe56e057f20f883e, tel = 11111111111, email = abc@qq.com
+[2022-09-08 14:24:31]--[reg_cgi.c:222]--len = 0, No data from standard input

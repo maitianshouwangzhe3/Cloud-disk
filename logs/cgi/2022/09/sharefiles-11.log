@@ -1,0 +1,479 @@
+[2022-09-11 14:10:01]--[src_cgi/sharefiles_cgi.c:42]--mysql:[user=root,pwd=root,database=cloud_disk][2022-09-11 14:10:01]--[src_cgi/sharefiles_cgi.c:47]--redis:[ip=127.0.0.1,port=6379]
+[2022-09-11 14:11:39]--[src_cgi/sharefiles_cgi.c:598]--cmd = count
+[2022-09-11 14:11:39]--[src_cgi/sharefiles_cgi.c:73]--select count from user_file_count where user="xxx_share_xxx_file_xxx_list_xxx_count_xxx" 操作失败  ret2 = 1
+[2022-09-11 14:11:39]--[src_cgi/sharefiles_cgi.c:85]--line = 0
+[2022-09-11 14:11:44]--[src_cgi/sharefiles_cgi.c:598]--cmd = count
+[2022-09-11 14:11:44]--[src_cgi/sharefiles_cgi.c:73]--select count from user_file_count where user="xxx_share_xxx_file_xxx_list_xxx_count_xxx" 操作失败  ret2 = 1
+[2022-09-11 14:11:44]--[src_cgi/sharefiles_cgi.c:85]--line = 0
+[2022-09-11 14:13:49]--[src_cgi/sharefiles_cgi.c:598]--cmd = count
+[2022-09-11 14:13:49]--[src_cgi/sharefiles_cgi.c:73]--select count from user_file_count where user="xxx_share_xxx_file_xxx_list_xxx_count_xxx" 操作失败  ret2 = 1
+[2022-09-11 14:13:49]--[src_cgi/sharefiles_cgi.c:85]--line = 0
+[2022-09-11 14:13:49]--[src_cgi/sharefiles_cgi.c:598]--cmd = count
+[2022-09-11 14:13:49]--[src_cgi/sharefiles_cgi.c:73]--select count from user_file_count where user="xxx_share_xxx_file_xxx_list_xxx_count_xxx" 操作失败  ret2 = 1
+[2022-09-11 14:13:49]--[src_cgi/sharefiles_cgi.c:85]--line = 0
+[2022-09-11 14:32:31]--[src_cgi/sharefiles_cgi.c:42]--mysql:[user=root,pwd=root,database=cloud_disk][2022-09-11 14:32:31]--[src_cgi/sharefiles_cgi.c:47]--redis:[ip=127.0.0.1,port=6379]
+[2022-09-11 14:32:36]--[src_cgi/sharefiles_cgi.c:599]--cmd = count
+[2022-09-11 14:32:36]--[src_cgi/sharefiles_cgi.c:86]--line = 2
+[2022-09-11 14:32:36]--[src_cgi/sharefiles_cgi.c:599]--cmd = pvdesc
+[2022-09-11 14:32:36]--[src_cgi/sharefiles_cgi.c:637]--buf = {
+    "count": 2,
+    "start": 0
+}
+
+[2022-09-11 14:32:36]--[src_cgi/sharefiles_cgi.c:646]--start = 0, count = 2
+[2022-09-11 14:32:36]--[src_cgi/sharefiles_cgi.c:384]--select count from user_file_count where user="xxx_share_xxx_file_xxx_list_xxx_count_xxx" 操作失败
+[2022-09-11 14:32:37]--[src_cgi/sharefiles_cgi.c:599]--cmd = count
+[2022-09-11 14:32:37]--[src_cgi/sharefiles_cgi.c:86]--line = 2
+[2022-09-11 14:32:38]--[src_cgi/sharefiles_cgi.c:599]--cmd = normal
+[2022-09-11 14:32:38]--[src_cgi/sharefiles_cgi.c:637]--buf = {
+    "count": 2,
+    "start": 0
+}
+
+[2022-09-11 14:32:38]--[src_cgi/sharefiles_cgi.c:646]--start = 0, count = 2
+[2022-09-11 14:32:38]--[src_cgi/sharefiles_cgi.c:173]--select share_file_list.*, file_info.url, file_info.size, file_info.type from file_info, share_file_list where file_info.md5 = share_file_list.md5 limit 0, 2 在操作
+[2022-09-11 14:32:38]--[src_cgi/sharefiles_cgi.c:195]--mysql_num_rows(res_set) failed
+[2022-09-11 14:32:44]--[src_cgi/sharefiles_cgi.c:599]--cmd = count
+[2022-09-11 14:32:44]--[src_cgi/sharefiles_cgi.c:86]--line = 2
+[2022-09-11 14:32:44]--[src_cgi/sharefiles_cgi.c:599]--cmd = normal
+[2022-09-11 14:32:44]--[src_cgi/sharefiles_cgi.c:637]--buf = {
+    "count": 2,
+    "start": 0
+}
+
+[2022-09-11 14:32:44]--[src_cgi/sharefiles_cgi.c:646]--start = 0, count = 2
+[2022-09-11 14:32:44]--[src_cgi/sharefiles_cgi.c:173]--select share_file_list.*, file_info.url, file_info.size, file_info.type from file_info, share_file_list where file_info.md5 = share_file_list.md5 limit 0, 2 在操作
+[2022-09-11 14:32:44]--[src_cgi/sharefiles_cgi.c:195]--mysql_num_rows(res_set) failed
+[2022-09-11 14:32:45]--[src_cgi/sharefiles_cgi.c:599]--cmd = count
+[2022-09-11 14:32:45]--[src_cgi/sharefiles_cgi.c:86]--line = 2
+[2022-09-11 14:32:45]--[src_cgi/sharefiles_cgi.c:599]--cmd = pvdesc
+[2022-09-11 14:32:45]--[src_cgi/sharefiles_cgi.c:637]--buf = {
+    "count": 2,
+    "start": 0
+}
+
+[2022-09-11 14:32:45]--[src_cgi/sharefiles_cgi.c:646]--start = 0, count = 2
+[2022-09-11 14:32:45]--[src_cgi/sharefiles_cgi.c:384]--select count from user_file_count where user="xxx_share_xxx_file_xxx_list_xxx_count_xxx" 操作失败
+[2022-09-11 14:32:59]--[src_cgi/sharefiles_cgi.c:599]--cmd = count
+[2022-09-11 14:32:59]--[src_cgi/sharefiles_cgi.c:86]--line = 2
+[2022-09-11 14:33:00]--[src_cgi/sharefiles_cgi.c:599]--cmd = normal
+[2022-09-11 14:33:00]--[src_cgi/sharefiles_cgi.c:637]--buf = {
+    "count": 2,
+    "start": 0
+}
+
+[2022-09-11 14:33:00]--[src_cgi/sharefiles_cgi.c:646]--start = 0, count = 2
+[2022-09-11 14:33:00]--[src_cgi/sharefiles_cgi.c:173]--select share_file_list.*, file_info.url, file_info.size, file_info.type from file_info, share_file_list where file_info.md5 = share_file_list.md5 limit 0, 2 在操作
+[2022-09-11 14:33:00]--[src_cgi/sharefiles_cgi.c:195]--mysql_num_rows(res_set) failed
+[2022-09-11 14:33:02]--[src_cgi/sharefiles_cgi.c:599]--cmd = count
+[2022-09-11 14:33:02]--[src_cgi/sharefiles_cgi.c:86]--line = 2
+[2022-09-11 14:33:02]--[src_cgi/sharefiles_cgi.c:599]--cmd = pvdesc
+[2022-09-11 14:33:02]--[src_cgi/sharefiles_cgi.c:637]--buf = {
+    "count": 2,
+    "start": 0
+}
+
+[2022-09-11 14:33:02]--[src_cgi/sharefiles_cgi.c:646]--start = 0, count = 2
+[2022-09-11 14:33:02]--[src_cgi/sharefiles_cgi.c:384]--select count from user_file_count where user="xxx_share_xxx_file_xxx_list_xxx_count_xxx" 操作失败
+[2022-09-11 14:35:54]--[src_cgi/sharefiles_cgi.c:42]--mysql:[user=root,pwd=root,database=cloud_disk][2022-09-11 14:35:54]--[src_cgi/sharefiles_cgi.c:47]--redis:[ip=127.0.0.1,port=6379]
+[2022-09-11 14:36:03]--[src_cgi/sharefiles_cgi.c:600]--cmd = count
+[2022-09-11 14:36:03]--[src_cgi/sharefiles_cgi.c:86]--line = 2
+[2022-09-11 14:36:03]--[src_cgi/sharefiles_cgi.c:600]--cmd = normal
+[2022-09-11 14:36:03]--[src_cgi/sharefiles_cgi.c:638]--buf = {
+    "count": 2,
+    "start": 0
+}
+
+[2022-09-11 14:36:03]--[src_cgi/sharefiles_cgi.c:647]--start = 0, count = 2
+[2022-09-11 14:36:03]--[src_cgi/sharefiles_cgi.c:173]--select share_file_list.*, file_info.url, file_info.size, file_info.type from file_info, share_file_list where file_info.md5 = share_file_list.md5 limit 0, 2 在操作
+[2022-09-11 14:36:03]--[src_cgi/sharefiles_cgi.c:195]--mysql_num_rows(res_set) failed
+[2022-09-11 14:36:06]--[src_cgi/sharefiles_cgi.c:600]--cmd = count
+[2022-09-11 14:36:06]--[src_cgi/sharefiles_cgi.c:86]--line = 2
+[2022-09-11 14:36:06]--[src_cgi/sharefiles_cgi.c:600]--cmd = pvdesc
+[2022-09-11 14:36:06]--[src_cgi/sharefiles_cgi.c:638]--buf = {
+    "count": 2,
+    "start": 0
+}
+
+[2022-09-11 14:36:06]--[src_cgi/sharefiles_cgi.c:647]--start = 0, count = 2
+[2022-09-11 14:36:06]--[src_cgi/sharefiles_cgi.c:401]--sql_num = 2, redis_num = 0
+[2022-09-11 14:36:06]--[src_cgi/sharefiles_cgi.c:415]--select md5, filename, pv from share_file_list order by pv desc 在操作
+[2022-09-11 14:36:06]--[src_cgi/sharefiles_cgi.c:437]--mysql_num_rows(res_set) failed
+[2022-09-11 14:47:39]--[src_cgi/sharefiles_cgi.c:42]--mysql:[user=root,pwd=root,database=cloud_disk][2022-09-11 14:47:39]--[src_cgi/sharefiles_cgi.c:47]--redis:[ip=127.0.0.1,port=6379]
+[2022-09-11 14:48:01]--[src_cgi/sharefiles_cgi.c:600]--cmd = count
+[2022-09-11 14:48:01]--[src_cgi/sharefiles_cgi.c:86]--line = 2
+[2022-09-11 14:48:01]--[src_cgi/sharefiles_cgi.c:600]--cmd = normal
+[2022-09-11 14:48:01]--[src_cgi/sharefiles_cgi.c:638]--buf = {
+    "count": 2,
+    "start": 0
+}
+
+[2022-09-11 14:48:01]--[src_cgi/sharefiles_cgi.c:647]--start = 0, count = 2
+[2022-09-11 14:48:01]--[src_cgi/sharefiles_cgi.c:173]--select share_file_list.*, file_info.url, file_info.size, file_info.type from file_info, share_file_list where file_info.md5 = share_file_list.md5 limit 0, 2 在操作
+[2022-09-11 14:48:01]--[src_cgi/sharefiles_cgi.c:195]--mysql_num_rows(res_set) failed
+[2022-09-11 14:48:02]--[src_cgi/sharefiles_cgi.c:600]--cmd = count
+[2022-09-11 14:48:02]--[src_cgi/sharefiles_cgi.c:86]--line = 2
+[2022-09-11 14:48:02]--[src_cgi/sharefiles_cgi.c:600]--cmd = pvdesc
+[2022-09-11 14:48:02]--[src_cgi/sharefiles_cgi.c:638]--buf = {
+    "count": 2,
+    "start": 0
+}
+
+[2022-09-11 14:48:02]--[src_cgi/sharefiles_cgi.c:647]--start = 0, count = 2
+[2022-09-11 14:48:02]--[src_cgi/sharefiles_cgi.c:401]--sql_num = 2, redis_num = 0
+[2022-09-11 14:48:02]--[src_cgi/sharefiles_cgi.c:415]--select md5, filename, pv from share_file_list order by pv desc 在操作
+[2022-09-11 14:48:02]--[src_cgi/sharefiles_cgi.c:437]--mysql_num_rows(res_set) failed
+[2022-09-11 14:48:23]--[src_cgi/sharefiles_cgi.c:600]--cmd = count
+[2022-09-11 14:48:23]--[src_cgi/sharefiles_cgi.c:86]--line = 2
+[2022-09-11 14:48:24]--[src_cgi/sharefiles_cgi.c:600]--cmd = normal
+[2022-09-11 14:48:24]--[src_cgi/sharefiles_cgi.c:638]--buf = {
+    "count": 2,
+    "start": 0
+}
+
+[2022-09-11 14:48:24]--[src_cgi/sharefiles_cgi.c:647]--start = 0, count = 2
+[2022-09-11 14:48:24]--[src_cgi/sharefiles_cgi.c:173]--select share_file_list.*, file_info.url, file_info.size, file_info.type from file_info, share_file_list where file_info.md5 = share_file_list.md5 limit 0, 2 在操作
+[2022-09-11 14:48:24]--[src_cgi/sharefiles_cgi.c:195]--mysql_num_rows(res_set) failed
+[2022-09-11 14:48:24]--[src_cgi/sharefiles_cgi.c:600]--cmd = count
+[2022-09-11 14:48:24]--[src_cgi/sharefiles_cgi.c:86]--line = 2
+[2022-09-11 14:48:24]--[src_cgi/sharefiles_cgi.c:600]--cmd = pvdesc
+[2022-09-11 14:48:24]--[src_cgi/sharefiles_cgi.c:638]--buf = {
+    "count": 2,
+    "start": 0
+}
+
+[2022-09-11 14:48:24]--[src_cgi/sharefiles_cgi.c:647]--start = 0, count = 2
+[2022-09-11 14:48:24]--[src_cgi/sharefiles_cgi.c:401]--sql_num = 2, redis_num = 0
+[2022-09-11 14:48:24]--[src_cgi/sharefiles_cgi.c:415]--select md5, filename, pv from share_file_list order by pv desc 在操作
+[2022-09-11 14:48:24]--[src_cgi/sharefiles_cgi.c:437]--mysql_num_rows(res_set) failed
+[2022-09-11 14:48:25]--[src_cgi/sharefiles_cgi.c:600]--cmd = count
+[2022-09-11 14:48:25]--[src_cgi/sharefiles_cgi.c:86]--line = 2
+[2022-09-11 14:48:25]--[src_cgi/sharefiles_cgi.c:600]--cmd = normal
+[2022-09-11 14:48:25]--[src_cgi/sharefiles_cgi.c:638]--buf = {
+    "count": 2,
+    "start": 0
+}
+
+[2022-09-11 14:48:25]--[src_cgi/sharefiles_cgi.c:647]--start = 0, count = 2
+[2022-09-11 14:48:25]--[src_cgi/sharefiles_cgi.c:173]--select share_file_list.*, file_info.url, file_info.size, file_info.type from file_info, share_file_list where file_info.md5 = share_file_list.md5 limit 0, 2 在操作
+[2022-09-11 14:48:25]--[src_cgi/sharefiles_cgi.c:195]--mysql_num_rows(res_set) failed
+[2022-09-11 14:48:26]--[src_cgi/sharefiles_cgi.c:600]--cmd = count
+[2022-09-11 14:48:26]--[src_cgi/sharefiles_cgi.c:86]--line = 2
+[2022-09-11 14:48:26]--[src_cgi/sharefiles_cgi.c:600]--cmd = normal
+[2022-09-11 14:48:26]--[src_cgi/sharefiles_cgi.c:638]--buf = {
+    "count": 2,
+    "start": 0
+}
+
+[2022-09-11 14:48:26]--[src_cgi/sharefiles_cgi.c:647]--start = 0, count = 2
+[2022-09-11 14:48:26]--[src_cgi/sharefiles_cgi.c:173]--select share_file_list.*, file_info.url, file_info.size, file_info.type from file_info, share_file_list where file_info.md5 = share_file_list.md5 limit 0, 2 在操作
+[2022-09-11 14:48:26]--[src_cgi/sharefiles_cgi.c:195]--mysql_num_rows(res_set) failed
+[2022-09-11 14:48:27]--[src_cgi/sharefiles_cgi.c:600]--cmd = count
+[2022-09-11 14:48:27]--[src_cgi/sharefiles_cgi.c:86]--line = 2
+[2022-09-11 14:48:27]--[src_cgi/sharefiles_cgi.c:600]--cmd = pvdesc
+[2022-09-11 14:48:27]--[src_cgi/sharefiles_cgi.c:638]--buf = {
+    "count": 2,
+    "start": 0
+}
+
+[2022-09-11 14:48:27]--[src_cgi/sharefiles_cgi.c:647]--start = 0, count = 2
+[2022-09-11 14:48:27]--[src_cgi/sharefiles_cgi.c:401]--sql_num = 2, redis_num = 0
+[2022-09-11 14:48:27]--[src_cgi/sharefiles_cgi.c:415]--select md5, filename, pv from share_file_list order by pv desc 在操作
+[2022-09-11 14:48:27]--[src_cgi/sharefiles_cgi.c:437]--mysql_num_rows(res_set) failed
+[2022-09-11 14:48:46]--[src_cgi/sharefiles_cgi.c:600]--cmd = count
+[2022-09-11 14:48:46]--[src_cgi/sharefiles_cgi.c:86]--line = 2
+[2022-09-11 14:48:46]--[src_cgi/sharefiles_cgi.c:600]--cmd = normal
+[2022-09-11 14:48:46]--[src_cgi/sharefiles_cgi.c:638]--buf = {
+    "count": 2,
+    "start": 0
+}
+
+[2022-09-11 14:48:46]--[src_cgi/sharefiles_cgi.c:647]--start = 0, count = 2
+[2022-09-11 14:48:46]--[src_cgi/sharefiles_cgi.c:173]--select share_file_list.*, file_info.url, file_info.size, file_info.type from file_info, share_file_list where file_info.md5 = share_file_list.md5 limit 0, 2 在操作
+[2022-09-11 14:48:46]--[src_cgi/sharefiles_cgi.c:195]--mysql_num_rows(res_set) failed
+[2022-09-11 14:48:47]--[src_cgi/sharefiles_cgi.c:600]--cmd = count
+[2022-09-11 14:48:47]--[src_cgi/sharefiles_cgi.c:86]--line = 2
+[2022-09-11 14:48:48]--[src_cgi/sharefiles_cgi.c:600]--cmd = normal
+[2022-09-11 14:48:48]--[src_cgi/sharefiles_cgi.c:638]--buf = {
+    "count": 2,
+    "start": 0
+}
+
+[2022-09-11 14:48:48]--[src_cgi/sharefiles_cgi.c:647]--start = 0, count = 2
+[2022-09-11 14:48:48]--[src_cgi/sharefiles_cgi.c:173]--select share_file_list.*, file_info.url, file_info.size, file_info.type from file_info, share_file_list where file_info.md5 = share_file_list.md5 limit 0, 2 在操作
+[2022-09-11 14:48:48]--[src_cgi/sharefiles_cgi.c:195]--mysql_num_rows(res_set) failed
+[2022-09-11 14:49:00]--[src_cgi/sharefiles_cgi.c:600]--cmd = count
+[2022-09-11 14:49:00]--[src_cgi/sharefiles_cgi.c:86]--line = 2
+[2022-09-11 14:49:00]--[src_cgi/sharefiles_cgi.c:600]--cmd = normal
+[2022-09-11 14:49:00]--[src_cgi/sharefiles_cgi.c:638]--buf = {
+    "count": 2,
+    "start": 0
+}
+
+[2022-09-11 14:49:00]--[src_cgi/sharefiles_cgi.c:647]--start = 0, count = 2
+[2022-09-11 14:49:00]--[src_cgi/sharefiles_cgi.c:173]--select share_file_list.*, file_info.url, file_info.size, file_info.type from file_info, share_file_list where file_info.md5 = share_file_list.md5 limit 0, 2 在操作
+[2022-09-11 14:49:00]--[src_cgi/sharefiles_cgi.c:195]--mysql_num_rows(res_set) failed
+[2022-09-11 15:53:10]--[src_cgi/sharefiles_cgi.c:600]--cmd = count
+[2022-09-11 15:53:10]--[src_cgi/sharefiles_cgi.c:86]--line = 2
+[2022-09-11 15:53:10]--[src_cgi/sharefiles_cgi.c:600]--cmd = normal
+[2022-09-11 15:53:10]--[src_cgi/sharefiles_cgi.c:638]--buf = {
+    "count": 2,
+    "start": 0
+}
+
+[2022-09-11 15:53:10]--[src_cgi/sharefiles_cgi.c:647]--start = 0, count = 2
+[2022-09-11 15:53:10]--[src_cgi/sharefiles_cgi.c:173]--select share_file_list.*, file_info.url, file_info.size, file_info.type from file_info, share_file_list where file_info.md5 = share_file_list.md5 limit 0, 2 在操作
+[2022-09-11 15:53:10]--[src_cgi/sharefiles_cgi.c:195]--mysql_num_rows(res_set) failed
+[2022-09-11 15:53:17]--[src_cgi/sharefiles_cgi.c:600]--cmd = count
+[2022-09-11 15:53:17]--[src_cgi/sharefiles_cgi.c:86]--line = 2
+[2022-09-11 15:53:17]--[src_cgi/sharefiles_cgi.c:600]--cmd = normal
+[2022-09-11 15:53:17]--[src_cgi/sharefiles_cgi.c:638]--buf = {
+    "count": 2,
+    "start": 0
+}
+
+[2022-09-11 15:53:17]--[src_cgi/sharefiles_cgi.c:647]--start = 0, count = 2
+[2022-09-11 15:53:17]--[src_cgi/sharefiles_cgi.c:173]--select share_file_list.*, file_info.url, file_info.size, file_info.type from file_info, share_file_list where file_info.md5 = share_file_list.md5 limit 0, 2 在操作
+[2022-09-11 15:53:17]--[src_cgi/sharefiles_cgi.c:293]--{
+	"files":	[{
+			"user":	"lwx",
+			"md5":	"36ab2e241431f71b938ba56e74c2d573",
+			"time":	"2022-09-11 15:53:14",
+			"filename":	"Linux本地端口开放命令.txt",
+			"share_status":	1,
+			"pv":	0,
+			"url":	"http://10.0.24.12:8888/group1/M00/00/00/CgAYDGMdfEOAdJqEAAAEN0Q9Ss4999.txt",
+			"size":	1079,
+			"type":	"txt"
+		}]
+}
+[2022-09-11 15:53:19]--[src_cgi/sharefiles_cgi.c:600]--cmd = count
+[2022-09-11 15:53:19]--[src_cgi/sharefiles_cgi.c:86]--line = 2
+[2022-09-11 15:53:19]--[src_cgi/sharefiles_cgi.c:600]--cmd = pvdesc
+[2022-09-11 15:53:19]--[src_cgi/sharefiles_cgi.c:638]--buf = {
+    "count": 2,
+    "start": 0
+}
+
+[2022-09-11 15:53:19]--[src_cgi/sharefiles_cgi.c:647]--start = 0, count = 2
+[2022-09-11 15:53:19]--[src_cgi/sharefiles_cgi.c:401]--sql_num = 2, redis_num = 1
+[2022-09-11 15:53:19]--[src_cgi/sharefiles_cgi.c:415]--select md5, filename, pv from share_file_list order by pv desc 在操作
+[2022-09-11 15:53:19]--[src_cgi/sharefiles_cgi.c:531]--{
+	"files":	[{
+			"filename":	"Linux本地端口开放命令.txt",
+			"pv":	0
+		}]
+}
+[2022-09-11 15:54:40]--[src_cgi/sharefiles_cgi.c:600]--cmd = count
+[2022-09-11 15:54:40]--[src_cgi/sharefiles_cgi.c:86]--line = 2
+[2022-09-11 15:54:40]--[src_cgi/sharefiles_cgi.c:600]--cmd = normal
+[2022-09-11 15:54:40]--[src_cgi/sharefiles_cgi.c:638]--buf = {
+    "count": 2,
+    "start": 0
+}
+
+[2022-09-11 15:54:40]--[src_cgi/sharefiles_cgi.c:647]--start = 0, count = 2
+[2022-09-11 15:54:40]--[src_cgi/sharefiles_cgi.c:173]--select share_file_list.*, file_info.url, file_info.size, file_info.type from file_info, share_file_list where file_info.md5 = share_file_list.md5 limit 0, 2 在操作
+[2022-09-11 15:54:40]--[src_cgi/sharefiles_cgi.c:293]--{
+	"files":	[{
+			"user":	"lwx",
+			"md5":	"36ab2e241431f71b938ba56e74c2d573",
+			"time":	"2022-09-11 15:53:14",
+			"filename":	"Linux本地端口开放命令.txt",
+			"share_status":	1,
+			"pv":	0,
+			"url":	"http://10.0.24.12:8888/group1/M00/00/00/CgAYDGMdfEOAdJqEAAAEN0Q9Ss4999.txt",
+			"size":	1079,
+			"type":	"txt"
+		}]
+}
+[2022-09-11 15:54:57]--[src_cgi/sharefiles_cgi.c:600]--cmd = count
+[2022-09-11 15:54:57]--[src_cgi/sharefiles_cgi.c:86]--line = 2
+[2022-09-11 15:54:57]--[src_cgi/sharefiles_cgi.c:600]--cmd = pvdesc
+[2022-09-11 15:54:57]--[src_cgi/sharefiles_cgi.c:638]--buf = {
+    "count": 2,
+    "start": 0
+}
+
+[2022-09-11 15:54:57]--[src_cgi/sharefiles_cgi.c:647]--start = 0, count = 2
+[2022-09-11 15:54:57]--[src_cgi/sharefiles_cgi.c:401]--sql_num = 2, redis_num = 1
+[2022-09-11 15:54:57]--[src_cgi/sharefiles_cgi.c:415]--select md5, filename, pv from share_file_list order by pv desc 在操作
+[2022-09-11 15:54:57]--[src_cgi/sharefiles_cgi.c:531]--{
+	"files":	[{
+			"filename":	"Linux本地端口开放命令.txt",
+			"pv":	0
+		}]
+}
+[2022-09-11 15:55:00]--[src_cgi/sharefiles_cgi.c:600]--cmd = count
+[2022-09-11 15:55:00]--[src_cgi/sharefiles_cgi.c:86]--line = 2
+[2022-09-11 15:55:00]--[src_cgi/sharefiles_cgi.c:600]--cmd = pvdesc
+[2022-09-11 15:55:00]--[src_cgi/sharefiles_cgi.c:638]--buf = {
+    "count": 2,
+    "start": 0
+}
+
+[2022-09-11 15:55:00]--[src_cgi/sharefiles_cgi.c:647]--start = 0, count = 2
+[2022-09-11 15:55:00]--[src_cgi/sharefiles_cgi.c:401]--sql_num = 2, redis_num = 1
+[2022-09-11 15:55:00]--[src_cgi/sharefiles_cgi.c:415]--select md5, filename, pv from share_file_list order by pv desc 在操作
+[2022-09-11 15:55:00]--[src_cgi/sharefiles_cgi.c:531]--{
+	"files":	[{
+			"filename":	"Linux本地端口开放命令.txt",
+			"pv":	0
+		}]
+}
+[2022-09-11 15:55:27]--[src_cgi/sharefiles_cgi.c:600]--cmd = count
+[2022-09-11 15:55:27]--[src_cgi/sharefiles_cgi.c:86]--line = 2
+[2022-09-11 15:55:28]--[src_cgi/sharefiles_cgi.c:600]--cmd = pvdesc
+[2022-09-11 15:55:28]--[src_cgi/sharefiles_cgi.c:638]--buf = {
+    "count": 2,
+    "start": 0
+}
+
+[2022-09-11 15:55:28]--[src_cgi/sharefiles_cgi.c:647]--start = 0, count = 2
+[2022-09-11 15:55:28]--[src_cgi/sharefiles_cgi.c:401]--sql_num = 2, redis_num = 1
+[2022-09-11 15:55:28]--[src_cgi/sharefiles_cgi.c:415]--select md5, filename, pv from share_file_list order by pv desc 在操作
+[2022-09-11 15:55:28]--[src_cgi/sharefiles_cgi.c:531]--{
+	"files":	[{
+			"filename":	"Linux本地端口开放命令.txt",
+			"pv":	0
+		}]
+}
+[2022-09-11 15:55:53]--[src_cgi/sharefiles_cgi.c:600]--cmd = count
+[2022-09-11 15:55:53]--[src_cgi/sharefiles_cgi.c:86]--line = 2
+[2022-09-11 15:55:53]--[src_cgi/sharefiles_cgi.c:600]--cmd = pvdesc
+[2022-09-11 15:55:53]--[src_cgi/sharefiles_cgi.c:638]--buf = {
+    "count": 2,
+    "start": 0
+}
+
+[2022-09-11 15:55:53]--[src_cgi/sharefiles_cgi.c:647]--start = 0, count = 2
+[2022-09-11 15:55:53]--[src_cgi/sharefiles_cgi.c:401]--sql_num = 2, redis_num = 1
+[2022-09-11 15:55:53]--[src_cgi/sharefiles_cgi.c:415]--select md5, filename, pv from share_file_list order by pv desc 在操作
+[2022-09-11 15:55:53]--[src_cgi/sharefiles_cgi.c:531]--{
+	"files":	[{
+			"filename":	"Linux本地端口开放命令.txt",
+			"pv":	1
+		}]
+}
+[2022-09-11 16:18:26]--[src_cgi/sharefiles_cgi.c:600]--cmd = count
+[2022-09-11 16:18:26]--[src_cgi/sharefiles_cgi.c:86]--line = 2
+[2022-09-11 16:18:26]--[src_cgi/sharefiles_cgi.c:600]--cmd = normal
+[2022-09-11 16:18:26]--[src_cgi/sharefiles_cgi.c:638]--buf = {
+    "count": 2,
+    "start": 0
+}
+
+[2022-09-11 16:18:26]--[src_cgi/sharefiles_cgi.c:647]--start = 0, count = 2
+[2022-09-11 16:18:26]--[src_cgi/sharefiles_cgi.c:173]--select share_file_list.*, file_info.url, file_info.size, file_info.type from file_info, share_file_list where file_info.md5 = share_file_list.md5 limit 0, 2 在操作
+[2022-09-11 16:18:26]--[src_cgi/sharefiles_cgi.c:293]--{
+	"files":	[{
+			"user":	"lwx",
+			"md5":	"36ab2e241431f71b938ba56e74c2d573",
+			"time":	"2022-09-11 15:53:14",
+			"filename":	"Linux本地端口开放命令.txt",
+			"share_status":	1,
+			"pv":	1,
+			"url":	"http://10.0.24.12:8888/group1/M00/00/00/CgAYDGMdfEOAdJqEAAAEN0Q9Ss4999.txt",
+			"size":	1079,
+			"type":	"txt"
+		}]
+}
+[2022-09-11 16:18:53]--[src_cgi/sharefiles_cgi.c:600]--cmd = count
+[2022-09-11 16:18:53]--[src_cgi/sharefiles_cgi.c:86]--line = 2
+[2022-09-11 16:18:53]--[src_cgi/sharefiles_cgi.c:600]--cmd = pvdesc
+[2022-09-11 16:18:53]--[src_cgi/sharefiles_cgi.c:638]--buf = {
+    "count": 2,
+    "start": 0
+}
+
+[2022-09-11 16:18:53]--[src_cgi/sharefiles_cgi.c:647]--start = 0, count = 2
+[2022-09-11 16:18:53]--[src_cgi/sharefiles_cgi.c:401]--sql_num = 2, redis_num = 1
+[2022-09-11 16:18:53]--[src_cgi/sharefiles_cgi.c:415]--select md5, filename, pv from share_file_list order by pv desc 在操作
+[2022-09-11 16:18:53]--[src_cgi/sharefiles_cgi.c:531]--{
+	"files":	[{
+			"filename":	"Linux本地端口开放命令.txt",
+			"pv":	1
+		}]
+}
+[2022-09-11 16:19:18]--[src_cgi/sharefiles_cgi.c:600]--cmd = count
+[2022-09-11 16:19:18]--[src_cgi/sharefiles_cgi.c:86]--line = 2
+[2022-09-11 16:19:18]--[src_cgi/sharefiles_cgi.c:600]--cmd = pvdesc
+[2022-09-11 16:19:18]--[src_cgi/sharefiles_cgi.c:638]--buf = {
+    "count": 2,
+    "start": 0
+}
+
+[2022-09-11 16:19:18]--[src_cgi/sharefiles_cgi.c:647]--start = 0, count = 2
+[2022-09-11 16:19:18]--[src_cgi/sharefiles_cgi.c:401]--sql_num = 2, redis_num = 1
+[2022-09-11 16:19:18]--[src_cgi/sharefiles_cgi.c:415]--select md5, filename, pv from share_file_list order by pv desc 在操作
+[2022-09-11 16:19:18]--[src_cgi/sharefiles_cgi.c:531]--{
+	"files":	[{
+			"filename":	"Linux本地端口开放命令.txt",
+			"pv":	1
+		}]
+}
+[2022-09-11 17:01:53]--[src_cgi/sharefiles_cgi.c:42]--mysql:[user=root,pwd=root,database=cloud_disk][2022-09-11 17:01:53]--[src_cgi/sharefiles_cgi.c:47]--redis:[ip=127.0.0.1,port=6379]
+[2022-09-11 17:02:24]--[src_cgi/sharefiles_cgi.c:600]--cmd = count
+[2022-09-11 17:02:24]--[src_cgi/sharefiles_cgi.c:86]--line = 2
+[2022-09-11 17:02:24]--[src_cgi/sharefiles_cgi.c:600]--cmd = normal
+[2022-09-11 17:02:24]--[src_cgi/sharefiles_cgi.c:638]--buf = {
+    "count": 2,
+    "start": 0
+}
+
+[2022-09-11 17:02:24]--[src_cgi/sharefiles_cgi.c:647]--start = 0, count = 2
+[2022-09-11 17:02:24]--[src_cgi/sharefiles_cgi.c:173]--select share_file_list.*, file_info.url, file_info.size, file_info.type from file_info, share_file_list where file_info.md5 = share_file_list.md5 limit 0, 2 在操作
+[2022-09-11 17:02:24]--[src_cgi/sharefiles_cgi.c:293]--{
+	"files":	[{
+			"user":	"lwx",
+			"md5":	"36ab2e241431f71b938ba56e74c2d573",
+			"time":	"2022-09-11 15:53:14",
+			"filename":	"Linux本地端口开放命令.txt",
+			"share_status":	1,
+			"pv":	2,
+			"url":	"http://10.0.24.12:8888/group1/M00/00/00/CgAYDGMdfEOAdJqEAAAEN0Q9Ss4999.txt",
+			"size":	1079,
+			"type":	"txt"
+		}]
+}
+[2022-09-11 17:16:33]--[src_cgi/sharefiles_cgi.c:42]--mysql:[user=root,pwd=root,database=cloud_disk][2022-09-11 17:16:33]--[src_cgi/sharefiles_cgi.c:47]--redis:[ip=127.0.0.1,port=6379]
+[2022-09-11 17:17:59]--[src_cgi/sharefiles_cgi.c:600]--cmd = count
+[2022-09-11 17:17:59]--[src_cgi/sharefiles_cgi.c:86]--line = 2
+[2022-09-11 17:18:00]--[src_cgi/sharefiles_cgi.c:600]--cmd = normal
+[2022-09-11 17:18:00]--[src_cgi/sharefiles_cgi.c:638]--buf = {
+    "count": 2,
+    "start": 0
+}
+
+[2022-09-11 17:18:00]--[src_cgi/sharefiles_cgi.c:647]--start = 0, count = 2
+[2022-09-11 17:18:00]--[src_cgi/sharefiles_cgi.c:173]--select share_file_list.*, file_info.url, file_info.size, file_info.type from file_info, share_file_list where file_info.md5 = share_file_list.md5 limit 0, 2 在操作
+[2022-09-11 17:18:00]--[src_cgi/sharefiles_cgi.c:293]--{
+	"files":	[{
+			"user":	"lwx",
+			"md5":	"36ab2e241431f71b938ba56e74c2d573",
+			"time":	"2022-09-11 15:53:14",
+			"filename":	"Linux本地端口开放命令.txt",
+			"share_status":	1,
+			"pv":	3,
+			"url":	"http://10.0.24.12:8888/group1/M00/00/00/CgAYDGMdfEOAdJqEAAAEN0Q9Ss4999.txt",
+			"size":	1079,
+			"type":	"txt"
+		}]
+}
+[2022-09-11 17:18:00]--[src_cgi/sharefiles_cgi.c:600]--cmd = count
+[2022-09-11 17:18:00]--[src_cgi/sharefiles_cgi.c:86]--line = 2
+[2022-09-11 17:18:00]--[src_cgi/sharefiles_cgi.c:600]--cmd = pvdesc
+[2022-09-11 17:18:00]--[src_cgi/sharefiles_cgi.c:638]--buf = {
+    "count": 2,
+    "start": 0
+}
+
+[2022-09-11 17:18:00]--[src_cgi/sharefiles_cgi.c:647]--start = 0, count = 2
+[2022-09-11 17:18:00]--[src_cgi/sharefiles_cgi.c:401]--sql_num = 2, redis_num = 1
+[2022-09-11 17:18:00]--[src_cgi/sharefiles_cgi.c:415]--select md5, filename, pv from share_file_list order by pv desc 在操作
+[2022-09-11 17:18:00]--[src_cgi/sharefiles_cgi.c:531]--{
+	"files":	[{
+			"filename":	"Linux本地端口开放命令.txt",
+			"pv":	3
+		}]
+}

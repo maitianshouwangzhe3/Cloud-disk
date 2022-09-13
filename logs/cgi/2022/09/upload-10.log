@@ -1,0 +1,11 @@
+[2022-09-10 12:47:21]--[src_cgi/upload_cgi.c:42]--mysql:[user=root,pwd=root,database=cloud_disk][2022-09-10 13:10:02]--[src_cgi/upload_cgi.c:42]--mysql:[user=root,pwd=root,database=cloud_disk][2022-09-10 13:13:27]--[src_cgi/upload_cgi.c:42]--mysql:[user=root,pwd=root,database=cloud_disk][2022-09-10 13:15:17]--[src_cgi/upload_cgi.c:616]--llwwxx成功上传[欧阳珺学习心得.txt, 大小：3691, md5码：4437fae69c884cbcd26be9879102de6e]到本地
+[2022-09-10 13:15:17]--[src_cgi/upload_cgi.c:346]--[upload FAILED!]
+[2022-09-10 13:21:30]--[src_cgi/upload_cgi.c:604]--len = 0, No data from standard input
+[2022-09-10 20:39:35]--[src_cgi/upload_cgi.c:42]--mysql:[user=root,pwd=root,database=cloud_disk][2022-09-10 20:40:13]--[src_cgi/upload_cgi.c:616]--lxl成功上传[man文档设置.txt, 大小：28, md5码：cdc0af3a90ca61000561473cfca53436]到本地
+[2022-09-10 20:40:13]--[src_cgi/upload_cgi.c:346]--[upload FAILED!]
+[2022-09-10 20:42:15]--[src_cgi/upload_cgi.c:616]--lwx成功上传[man文档设置.txt, 大小：28, md5码：cdc0af3a90ca61000561473cfca53436]到本地
+[2022-09-10 20:42:15]--[src_cgi/upload_cgi.c:346]--[upload FAILED!]
+[2022-09-10 21:16:41]--[src_cgi/upload_cgi.c:616]--lwx成功上传[Makefile, 大小：17536, md5码：5b1ee9fb4e61be71e460a742d6939647]到本地
+[2022-09-10 21:16:41]--[src_cgi/upload_cgi.c:351]--get [group1/M00/00/00/CgAYDGMcjjmAKWVhAABEgPHdf7o6083419] succ!
+[2022-09-10 21:16:41]--[src_cgi/upload_cgi.c:456]--file url is: http://10.0.24.12:8888/group1/M00/00/00/CgAYDGMcjjmAKWVhAABEgPHdf7o6083419
+[2022-09-10 21:16:41]--[src_cgi/upload_cgi.c:510]--insert into file_info (md5, file_id, url, size, type, count) values ('5b1ee9fb4e61be71e460a742d6939647', 'group1/M00/00/00/CgAYDGMcjjmAKWVhAABEgPHdf7o6083419', 'http://10.0.24.12:8888/group1/M00/00/00/CgAYDGMcjjmAKWVhAABEgPHdf7o6083419', '17536', 'null', 1) 文件信息插入成功

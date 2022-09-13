@@ -1,0 +1,12 @@
+[2022-09-10 13:16:01]--[src_cgi/reg_cgi.c:237]--buf = {
+    "email": "aobc@qq.com",
+    "firstPwd": "e10adc3949ba59abbe56e057f20f883e",
+    "nickName": "lxl",
+    "phone": "11113111111",
+    "userName": "lxl"
+}
+
+[2022-09-10 13:16:01]--[src_cgi/reg_cgi.c:124]--ret =0
+[2022-09-10 13:16:01]--[src_cgi/reg_cgi.c:129]--mysql_user = root, mysql_pwd = root, mysql_db = cloud_disk
+[2022-09-10 13:16:01]--[src_cgi/reg_cgi.c:60]--child1->valuestring = lxl
+[2022-09-10 13:16:01]--[src_cgi/reg_cgi.c:142]--user = lxl, nick_name = lxl, pwd = e10adc3949ba59abbe56e057f20f883e, tel = 11113111111, email = aobc@qq.com
