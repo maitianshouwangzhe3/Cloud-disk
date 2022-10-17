@@ -1,46 +1,101 @@
-/**
- * @file login_cgi.c
- * @brief   登陆后台CGI程序
- * @author Mike
- * @version 2.0
- * @date
- */
-#include <unistd.h>
-extern char ** environ;
+#include "login_cgi.h"
 
-#include "fcgio.h"
-#include <iostream>
 
-#include "fcgi_config.h"
-#include "fcgi_stdio.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include "../include/make_log.h" //日志头文件
-#include "../include/util_cgi.h"
-#include "../include/deal_mysql.h"
-#include "../include/redis_op.h"
-#include "../include/cfg.h"
-#include "../include/cJSON.h"
-#include "../include/des.h"    //加密
-#include "../include/base64.h" //base64
-#include "../include/md5.h"    //md5
-#include <time.h>
-//  g++ -o login login_cgi.cpp ../common/redis_op.cpp ../common/des.cpp ../common/base64.cpp ../common/md5.cpp ../common/make_log.cpp ../common/util_cgi.cpp ../common/deal_mysql.cpp ../common/cfg.cpp ../common/cJSON.cpp -lmysqlclient -lm -lfcgi -lhiredis  -I /usr/local/include -L /usr/local/lib -lfcgi -lstdc++ -lfcgi++
-#define LOGIN_LOG_MODULE "cgi"
-#define LOGIN_LOG_PROC   "(char*)login"
+login::login(){
+    len = 0;
+    memset(token, 0, sizeof(token));
+    memset(buf, 0, sizeof(buf));
+    memset(user, 0, sizeof(user));
+    memset(pwd, 0, sizeof(pwd));
 
-using namespace std;
+    cin_streambuf = cin.rdbuf();
+    cout_streambuf = cout.rdbuf();
+    cerr_streambuf = cerr.rdbuf();
 
-//解析用户登陆信息的json包login_buf
-//用户名保存在user，密码保存在pwd
-int get_login_info(char *login_buf, char *user, char *pwd)
-{
+    FCGX_Init();
+    FCGX_InitRequest(&request, 0, 0);
+}
+
+login::~login(){
+    cin.rdbuf(cin_streambuf);
+    cout.rdbuf(cout_streambuf);
+    cerr.rdbuf(cerr_streambuf);
+}
+
+void login::Init(){
+
+}
+
+void login::run(){
+    while(FCGX_Accept_r(&request) == 0){
+        int len = 0;
+        char token[128] = {0};
+
+        fcgi_streambuf cin_fcgi_streambuf(request.in);
+        fcgi_streambuf cout_fcgi_streambuf(request.out);
+        fcgi_streambuf cerr_fcgi_streambuf(request.err);
+
+        cin.rdbuf(&cin_fcgi_streambuf);
+        cout.rdbuf(&cout_fcgi_streambuf);
+        cerr.rdbuf(&cerr_fcgi_streambuf);
+
+        char * clenstr = FCGX_GetParam("CONTENT_LENGTH", request.envp);
+        cout << "Content-type: text/html\r\n\r\n";
+
+        if(clenstr == NULL){
+            len = 0;
+        }
+        else{
+            len = atoi(clenstr);        //字符串转整形
+        }
+
+        if(len <= 0){                   //没有用户信息
+            cout << "No data from standard input.<p>\n";
+            LOG(LOGIN_LOG_MODULE, LOGIN_LOG_PROC, "len = 0, No data from standard input\n");
+        }
+        else{                           //获取用户信息
+            char buf[4 * 1024] = {0};
+            cin.read(buf, len);         //从cin(web服务器)读取数据
+
+            LOG(LOGIN_LOG_MODULE, LOGIN_LOG_PROC, "buf = %s\n", buf);
+
+            char user[512] = {0};
+            char pwd[512] = {0};
+            get_login_info();
+
+            LOG(LOGIN_LOG_MODULE, LOGIN_LOG_PROC, "user = %s, pwd = %s\n", user, pwd);
+
+            //登录判断，成功返回0
+            int ret = check_user_pwd();
+            if (ret == 0) //登陆成功
+            {
+                //生成token字符串
+                memset(token, 0, sizeof(token));
+                ret = set_token();
+                LOG(LOGIN_LOG_MODULE, LOGIN_LOG_PROC, "token = %s\n", token);
+
+            }
+
+            if(ret == 0)
+            {
+                //返回前端登陆情况， 000代表成功
+                return_login_status("000");
+            }
+            else
+            {
+                //返回前端登陆情况， 001代表失败
+                return_login_status("001");
+            }
+        }
+    }
+}
+
+int login::get_login_info(){
     int ret = 0;
 
     //解析json包
     //解析一个json字符串为cJSON对象
-    cJSON * root = cJSON_Parse(login_buf);
+    cJSON * root = cJSON_Parse(buf);
     if(NULL == root)
     {
         LOG(LOGIN_LOG_MODULE, LOGIN_LOG_PROC, "cJSON_Parse err\n");
@@ -77,37 +132,22 @@ int get_login_info(char *login_buf, char *user, char *pwd)
     {
         LOG(LOGIN_LOG_MODULE, LOGIN_LOG_PROC, "cJSON_GetObjectItem err\n");
         ret = -1;
-        goto END;
+        if(root != NULL)
+        {
+            cJSON_Delete(root);//删除json对象
+            root = NULL;
+        }
     }
 
     //LOG(LOGIN_LOG_MODULE, LOGIN_LOG_PROC, "child1->valuestring = %s\n", child1->valuestring);
     strcpy(pwd, child2->valuestring); //拷贝内容
 
-END:
-    if(root != NULL)
-    {
-        cJSON_Delete(root);//删除json对象
-        root = NULL;
-    }
+
 
     return ret;
 }
 
-
-/* -------------------------------------------*/
-/**
- * @brief  判断用户登陆情况
- *
- * @param user 		用户名
- * @param pwd 		密码
- *
- * @returns
- *      成功: 0
- *      失败：-1
- */
- /* -------------------------------------------*/
-int check_user_pwd( char *user, char *pwd )
-{
+int login::check_user_pwd(){
     char sql_cmd[SQL_MAX_LEN] = {0};
     int ret = 0;
 
@@ -152,8 +192,7 @@ int check_user_pwd( char *user, char *pwd )
     return ret;
 }
 
-int set_token(char *user, char *token)
-{
+int login::set_token(){
     int ret = 0;
     redisContext * redis_conn = NULL;
 
@@ -247,10 +286,7 @@ END:
 
 }
 
-
-//返回前端情况
-void return_login_status(char *status_num, char *token)
-{
+void login::return_login_status(char* status_num){
     char *out = NULL;
     cJSON *root = cJSON_CreateObject();  //创建json项目
     cJSON_AddStringToObject(root, "code", status_num);// {"code":"000"}
@@ -265,79 +301,4 @@ void return_login_status(char *status_num, char *token)
         cout << out << '\n';
         free(out); //记得释放
     }
-}
-
-
-int main(){
-    streambuf * cin_streambuf = cin.rdbuf();
-    streambuf * cout_streambuf = cout.rdbuf();
-    streambuf * cerr_streambuf = cerr.rdbuf();
-
-    FCGX_Request request;
-
-    FCGX_Init();
-    FCGX_InitRequest(&request, 0, 0);
-
-    while(FCGX_Accept_r(&request) == 0){
-        int len = 0;
-        char token[128] = {0};
-
-        fcgi_streambuf cin_fcgi_streambuf(request.in);
-        fcgi_streambuf cout_fcgi_streambuf(request.out);
-        fcgi_streambuf cerr_fcgi_streambuf(request.err);
-
-        cin.rdbuf(&cin_fcgi_streambuf);
-        cout.rdbuf(&cout_fcgi_streambuf);
-        cerr.rdbuf(&cerr_fcgi_streambuf);
-
-        char * clenstr = FCGX_GetParam("CONTENT_LENGTH", request.envp);
-        cout << "Content-type: text/html\r\n\r\n";
-
-        if(clenstr == NULL){
-            len = 0;
-        }
-        else{
-            len = atoi(clenstr);        //字符串转整形
-        }
-
-        if(len <= 0){                   //没有用户信息
-            cout << "No data from standard input.<p>\n";
-            LOG(LOGIN_LOG_MODULE, LOGIN_LOG_PROC, "len = 0, No data from standard input\n");
-        }
-        else{                           //获取用户信息
-            char buf[4 * 1024] = {0};
-            cin.read(buf, len);         //从cin(web服务器)读取数据
-
-            LOG(LOGIN_LOG_MODULE, LOGIN_LOG_PROC, "buf = %s\n", buf);
-
-            char user[512] = {0};
-            char pwd[512] = {0};
-            get_login_info(buf, user, pwd);
-
-            LOG(LOGIN_LOG_MODULE, LOGIN_LOG_PROC, "user = %s, pwd = %s\n", user, pwd);
-
-            //登录判断，成功返回0
-            int ret = check_user_pwd( user, pwd );
-            if (ret == 0) //登陆成功
-            {
-                //生成token字符串
-                memset(token, 0, sizeof(token));
-                ret = set_token(user, token);
-                LOG(LOGIN_LOG_MODULE, LOGIN_LOG_PROC, "token = %s\n", token);
-
-            }
-
-            if(ret == 0)
-            {
-                //返回前端登陆情况， 000代表成功
-                return_login_status("000", token);
-            }
-            else
-            {
-                //返回前端登陆情况， 001代表失败
-                return_login_status("001", "fail");
-            }
-        }
-    }
-    return 0;
 }
