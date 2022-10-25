@@ -1,10 +1,4 @@
-#include<stdio.h>
-#include<stdarg.h>
-#include<string.h>
-#include<fcntl.h>
-#include<unistd.h>
-#include<time.h>
-#include<sys/stat.h>
+
 
 #include"../include/make_log.h"
 #include<pthread.h>
@@ -13,8 +7,8 @@
 pthread_mutex_t ca_log_lock=PTHREAD_MUTEX_INITIALIZER;
 
 //创建目录并写入内容
-int dumpmsg_to_file(char *module_name, char *proc_name, const char *filename,
-                        int line, const char *funcname, char *fmt, ...)
+int dumpmsg_to_file(const char *module_name,const char *proc_name, const char *filename,
+                        const int line, const char *funcname, const char *fmt, ...)
 {
         char mesg[4096]={0};
         char buf[4096]={0};
@@ -68,7 +62,7 @@ int out_put_file(char *path, char *buf)
 	return 0;
 }
 //创建目录
-int make_path(char *path, char *module_name, char *proc_name)
+int make_path(char *path, const char *module_name, const char *proc_name)
 {
 	time_t t;
 	struct tm *now = NULL;

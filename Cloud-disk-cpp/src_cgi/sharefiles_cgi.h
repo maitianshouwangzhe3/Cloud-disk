@@ -32,8 +32,8 @@ extern char ** environ;
 #include "../include/cJSON.h"
 #include <sys/time.h>
 
-#define SHAREFILES_LOG_MODULE       "cgi"
-#define SHAREFILES_LOG_PROC         "sharefiles"
+#define SHAREFILES_LOG_MODULE       (char*)"cgi"
+#define SHAREFILES_LOG_PROC         (char*)"sharefiles"
 
 
 using namespace std;

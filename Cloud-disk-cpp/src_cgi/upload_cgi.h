@@ -27,14 +27,14 @@ extern char ** environ;
 #include <fcntl.h>
 #include <unistd.h>
 #include <sys/wait.h>
-#include "deal_mysql.h"
+#include "../include/deal_mysql.h"
 #include "fcgi_stdio.h"
-#include "make_log.h" //日志头文件
-#include "cfg.h"
-#include "util_cgi.h" //cgi后台通用接口，trim_space(), memstr()
+#include "../include/make_log.h" //日志头文件
+#include "../include/cfg.h"
+#include "../include/util_cgi.h" //cgi后台通用接口，trim_space(), memstr()
 
-#define UPLOAD_LOG_MODULE "cgi"
-#define UPLOAD_LOG_PROC   "upload"
+#define UPLOAD_LOG_MODULE (char*)"cgi"
+#define UPLOAD_LOG_PROC   (char*)"upload"
 
 using namespace std;
 

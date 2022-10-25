@@ -4,14 +4,16 @@
 //配置文件路径
 #define CFG_PATH "/home/ubuntu/mycloud/cloud/conf/cfg.json" 
 ///home/ubuntu/mycloud/cloud/conf
-#define CFG_LOG_MODULE "cgi"
-#define CFG_LOG_PROC   "cfg"
+#define CFG_LOG_MODULE (char*)"cgi"
+#define CFG_LOG_PROC   (char*)"cfg"
 
-//#define LOGIN_LOG_PROC   "login"
+
+//using namespace std;
+
 
 class cfg{
 public:
-    static int get_cfg_value(const char *profile, char *tile, char *key, char *value);
+    static int get_cfg_value(const char *profile, const char *tile, const char *key, char *value);
 
     //获取数据库用户名、用户密码、数据库标示等信息
     static int get_mysql_info(char *mysql_user, char *mysql_pwd, char *mysql_db);

@@ -1,5 +1,5 @@
 /**
- * @file dealfile_cgi.c
+ * @file dealfile_cgi.cpp
  * @brief  分享、删除文件、文件pv字段处理CGI程序
  * @author Mike
  * @version 2.0
@@ -17,7 +17,7 @@ extern char ** environ;
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "../include/make_log.h" //日志头文件
+ //日志头文件
 #include "../include/util_cgi.h"
 #include "../include/deal_mysql.h"
 #include "../include/redis_keys.h"
@@ -26,8 +26,12 @@ extern char ** environ;
 #include "../include/cJSON.h"
 #include <sys/time.h>
 
-#define DEALFILE_LOG_MODULE       "cgi"
-#define DEALFILE_LOG_PROC         "dealfile"
+extern "C"{
+    #include "../include/make_log.h"
+}
+
+#define DEALFILE_LOG_MODULE       (char*)"cgi"
+#define DEALFILE_LOG_PROC         (char*)"dealfile"
 
 using namespace std;
 

@@ -10,8 +10,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "../include/make_log.h"
+//#include "../include/make_log.h"
 #include "../include/cfg.h"
+extern "C"{
+    #include "../include/make_log.h"
+}
 
 /* -------------------------------------------*/
 /**
@@ -26,7 +29,7 @@
  *      0 succ, -1 fail
  */
 /* -------------------------------------------*/
-int cfg::get_cfg_value(const char *profile, char *title, char *key, char *value)
+int cfg::get_cfg_value(const char *profile, const char *title, const char *key, char *value)
 {
     LOG(CFG_LOG_MODULE, CFG_LOG_PROC, "2fopen err\n");
     int ret = 0;

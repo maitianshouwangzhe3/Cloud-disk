@@ -17,8 +17,8 @@
 #define PIC_NAME_LEN        (10)    //图片资源名字长度
 #define PIC_URL_LEN         (256)   //图片资源url名字长度
 
-#define UTIL_LOG_MODULE     "cgi"
-#define UTIL_LOG_PROC       "util"
+#define UTIL_LOG_MODULE     (char*)"cgi"
+#define UTIL_LOG_PROC       (char*)"util"
 
 class util_cgi {
 public:
@@ -61,7 +61,7 @@ public:
     static void str_replace(char* strSrc, char* strFind, char* strReplace);
 
     //返回前端情况，NULL代表失败, 返回的指针不为空，则需要free
-    static char * return_status(char *status_num);
+    static char * return_status(const char *status_num);
 
     /**
     * @brief  验证登陆token

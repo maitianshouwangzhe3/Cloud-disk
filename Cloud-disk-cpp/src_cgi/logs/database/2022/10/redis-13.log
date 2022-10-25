@@ -1,6 +1,0 @@
-[2022-10-13 17:00:04]--[../common/redis_op.cpp:369]--[+][GMS_REDIS]Connect 127.0.0.1:6379 SUCCESS!
-[2022-10-13 17:00:04]--[../common/redis_op.cpp:525]--[+][GMS_REDIS]Disconnect SUCCESS!
-[2022-10-13 17:03:44]--[../common/redis_op.cpp:369]--[+][GMS_REDIS]Connect 127.0.0.1:6379 SUCCESS!
-[2022-10-13 17:03:44]--[../common/redis_op.cpp:525]--[+][GMS_REDIS]Disconnect SUCCESS!
-[2022-10-13 18:05:59]--[../common/redis_op.cpp:369]--[+][GMS_REDIS]Connect 127.0.0.1:6379 SUCCESS!
-[2022-10-13 18:05:59]--[../common/redis_op.cpp:525]--[+][GMS_REDIS]Disconnect SUCCESS!

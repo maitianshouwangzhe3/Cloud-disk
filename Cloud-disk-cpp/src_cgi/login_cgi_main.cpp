@@ -7,7 +7,7 @@
  */
 
 #include "login_cgi.h"
-//  g++ -o login login_cgi.cpp login_cgi_main.cpp ../common/redis_op.cpp ../common/des.cpp ../common/base64.cpp ../common/md5.cpp ../common/make_log.cpp ../common/util_cgi.cpp ../common/deal_mysql.cpp ../common/cfg.cpp ../common/cJSON.cpp -lmysqlclient -lm -lfcgi -lhiredis  -I /usr/local/include -L /usr/local/lib -lfcgi -lstdc++ -lfcgi++
+//  g++ -o login login_cgi.cpp login_cgi_main.cpp ../common/redis_op.cpp ../common/des.cpp ../common/base64.cpp ../common/md5.cpp ../common/make_log.c ../common/util_cgi.cpp ../common/deal_mysql.cpp ../common/cfg.cpp ../common/cJSON.cpp -lmysqlclient -lm -lfcgi -lhiredis  -I /usr/local/include -L /usr/local/lib -lfcgi -lstdc++ -lfcgi++
 
 int main(){
     login ln;

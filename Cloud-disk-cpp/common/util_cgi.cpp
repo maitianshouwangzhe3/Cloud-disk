@@ -13,7 +13,10 @@
 #include "../include/util_cgi.h"
 #include "../include/cJSON.h"
 
-#include "../include/make_log.h"
+//#include "../include/make_log.h"
+extern "C"{
+    #include "../include/make_log.h"
+}
 
 #include "../include/cfg.h"
 
@@ -225,7 +228,7 @@ void util_cgi::str_replace(char* strSrc, char* strFind, char* strReplace){
 }
 
 //返回前端情况，NULL代表失败, 返回的指针不为空，则需要free
-char * util_cgi::return_status(char *status_num){
+char * util_cgi::return_status(const char *status_num){
     char *out = NULL;
 
     cJSON *root = cJSON_CreateObject();  //创建json项目
@@ -246,9 +249,15 @@ char * util_cgi::return_status(char *status_num){
  *          成功返回0，失败-1
  */
 
-int verify_token(char *user, char *token){
+/// @brief 
+/// @param user 
+/// @param token 
+/// @return 
+int util_cgi::verify_token(char *user, char *token){
     int ret = 0;
     redisContext * redis_conn = NULL;
+    //连接redis数据库
+    redis_op re;
     char tmp_token[128] = {0};
 
     //redis 服务器ip、端口
@@ -258,15 +267,14 @@ int verify_token(char *user, char *token){
     //读取redis配置信息
     cfg::get_cfg_value(CFG_PATH, "redis", "ip", redis_ip);
     cfg::get_cfg_value(CFG_PATH, "redis", "port", redis_port);
-
-    //连接redis数据库
-    redis_op re;
+    
+    
     redis_conn = re.rop_connectdb_nopwd(redis_ip, redis_port);
     if (redis_conn == NULL)
     {
         LOG(UTIL_LOG_MODULE, UTIL_LOG_PROC, "redis connected error\n");
         ret = -1;
-        goto END;
+        
     }
 
     //获取user对应的value
@@ -279,11 +287,6 @@ int verify_token(char *user, char *token){
         }
     }
 
-END:
-    if(redis_conn != NULL)
-    {
-        re.rop_disconnect(redis_conn);
-    }
 
 
     return ret;

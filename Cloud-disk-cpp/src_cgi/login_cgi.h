@@ -21,8 +21,8 @@ extern char ** environ;
 #include "../include/md5.h"    //md5
 #include <time.h>
 //  g++ -o login login_cgi.cpp ../common/redis_op.cpp ../common/des.cpp ../common/base64.cpp ../common/md5.cpp ../common/make_log.cpp ../common/util_cgi.cpp ../common/deal_mysql.cpp ../common/cfg.cpp ../common/cJSON.cpp -lmysqlclient -lm -lfcgi -lhiredis  -I /usr/local/include -L /usr/local/lib -lfcgi -lstdc++ -lfcgi++
-#define LOGIN_LOG_MODULE "cgi"
-#define LOGIN_LOG_PROC   "(char*)login"
+#define LOGIN_LOG_MODULE (char*)"cgi"
+#define LOGIN_LOG_PROC   (char*)"login"
 
 using namespace std;
 
@@ -52,6 +52,6 @@ public:
     int get_login_info();
     int check_user_pwd();
     int set_token();
-    void return_login_status(char *status_num);
+    void return_login_status(const char *status_num);
 
 };

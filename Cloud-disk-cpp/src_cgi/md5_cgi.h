@@ -26,8 +26,8 @@ extern char ** environ;
 #include "../include/cJSON.h"
 #include <sys/time.h>
 
-#define MD5_LOG_MODULE       "cgi"
-#define MD5_LOG_PROC         "md5"
+#define MD5_LOG_MODULE       (char*)"cgi"
+#define MD5_LOG_PROC         (char*)"md5"
 
 
 using namespace std;

@@ -45,14 +45,14 @@ void myfiles::run(){
 
         Init();
 
-        // 获取URL地址 "?" 后面的内容
-        char *query = getenv("QUERY_STRING");
+        // 获取URL地址 "?" 后面的内容 FCGX_GetParam("CONTENT_LENGTH", request.envp);
+        char *query = FCGX_GetParam("QUERY_STRING", request.envp);
 
         //解析命令
         util_cgi::query_parse_key_value(query, "cmd", cmd, NULL);
         LOG(MYFILES_LOG_MODULE, MYFILES_LOG_PROC, "cmd = %s\n", cmd);
 
-        char *contentLength = getenv("CONTENT_LENGTH");
+        char *contentLength = FCGX_GetParam("CONTENT_LENGTH", request.envp);;
 
         cout << "Content-type: text/html\r\n\r\n";
 
@@ -205,7 +205,7 @@ int myfiles::get_count_json_info(char *user, char *token){
 
 void myfiles::return_login_status(long num, int token_flag){
     char *out = NULL;
-    char *token;
+    const char *token;
     char num_buf[128] = {0};
 
     if(token_flag == 0)

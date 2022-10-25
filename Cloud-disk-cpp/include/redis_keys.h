@@ -24,7 +24,7 @@
 |   ZREMRANGEBYRANK key start stop 删除指定范围的成员
 |   zlexcount zset [member [member 判断某个成员是否存在，存在返回1，不存在返回0
 `---------------------------------------------------------*/
-#define FILE_PUBLIC_ZSET                  "FILE_PUBLIC_ZSET"
+#define FILE_PUBLIC_ZSET                  (char*)"FILE_PUBLIC_ZSET"
 
 /*-------------------------------------------------------
 | 文件标示和文件名对应表 (HASH)
@@ -35,7 +35,7 @@
 |    hset key field value
 |    hget key field
 `--------------------------------------------------------*/
-#define FILE_NAME_HASH                "FILE_NAME_HASH"
+#define FILE_NAME_HASH                (char*)"FILE_NAME_HASH"
 
 
 

@@ -13,7 +13,14 @@ upload::upload(){
 }
 
 upload::~upload(){
+    cin.rdbuf(cin_streambuf);
+    cout.rdbuf(cout_streambuf);
+    cerr.rdbuf(cerr_streambuf);
 
+    if(conn != NULL)
+    {
+        mysql_close(conn); //断开数据库连接
+    }
 }
 
 void upload::Init(){
@@ -31,15 +38,16 @@ void upload::Init(){
 }
 
 void upload::run(){
+    fcgi_streambuf cin_fcgi_streambuf(request.in);
+    fcgi_streambuf cout_fcgi_streambuf(request.out);
+    fcgi_streambuf cerr_fcgi_streambuf(request.err);
+
+    cin.rdbuf(&cin_fcgi_streambuf);
+    cout.rdbuf(&cout_fcgi_streambuf);
+    cerr.rdbuf(&cerr_fcgi_streambuf);
     while(FCGX_Accept_r(&request) == 0){
         int ret = 0;
-        fcgi_streambuf cin_fcgi_streambuf(request.in);
-        fcgi_streambuf cout_fcgi_streambuf(request.out);
-        fcgi_streambuf cerr_fcgi_streambuf(request.err);
-
-        cin.rdbuf(&cin_fcgi_streambuf);
-        cout.rdbuf(&cout_fcgi_streambuf);
-        cerr.rdbuf(&cerr_fcgi_streambuf);
+        
 
         char * contentLength = FCGX_GetParam("CONTENT_LENGTH", request.envp);
 

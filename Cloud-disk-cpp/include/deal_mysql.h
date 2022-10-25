@@ -3,7 +3,7 @@
 
 #include <mysql/mysql.h> //数据库
 
-#define SQL_MAX_LEN         (512)   //sql语句长度
+#define SQL_MAX_LEN         (2048)   //sql语句长度
 
 class deal_mysql{
 public:

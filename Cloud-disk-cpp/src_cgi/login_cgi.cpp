@@ -286,7 +286,7 @@ END:
 
 }
 
-void login::return_login_status(char* status_num){
+void login::return_login_status(const char* status_num){
     char *out = NULL;
     cJSON *root = cJSON_CreateObject();  //创建json项目
     cJSON_AddStringToObject(root, "code", status_num);// {"code":"000"}

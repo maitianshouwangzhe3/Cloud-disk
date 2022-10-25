@@ -27,8 +27,8 @@ extern char ** environ;
 #include "../include/redis_op.h"
 #include <sys/time.h>
 
-#define DEALSHAREFILE_LOG_MODULE       "cgi"
-#define DEALSHAREFILE_LOG_PROC         "dealsharefile"
+#define DEALSHAREFILE_LOG_MODULE       (char*)"cgi"
+#define DEALSHAREFILE_LOG_PROC         (char*)"dealsharefile"
 
 using namespace std;
 

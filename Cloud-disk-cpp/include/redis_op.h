@@ -10,11 +10,15 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <string.h>
-#include "make_log.h"
+//#include "make_log.h"
+#include "cfg.h"
+extern "C"{
+    #include "../include/make_log.h"
+}
 
 
-#define REDIS_LOG_MODULE          "database"
-#define REDIS_LOG_PROC            "redis"
+#define REDIS_LOG_MODULE          (char*)"database"
+#define REDIS_LOG_PROC            (char*)"redis"
 
 #define REDIS_COMMAND_SIZE        300            /* redis Command 指令最大长度 */
 #define FIELD_ID_SIZE            100            /* redis hash表field域字段长度 */
@@ -27,6 +31,7 @@ typedef char (*RVALUES)[VALUES_ID_SIZE];    /* redis 表存放批量value字符�
 
 
 class redis_op{
+
 public:
     /* -------------------------------------------*/
 /**

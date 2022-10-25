@@ -15,11 +15,7 @@ extern char ** environ;
 
 #include "fcgi_config.h"
 #include "fcgi_stdio.h"
-#include "fcgi_config.h"
-#include "fcgi_stdio.h"
 
-#include "fcgi_config.h"
-#include "fcgi_stdio.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -30,8 +26,8 @@ extern char ** environ;
 #include "../include/cJSON.h"
 #include <sys/time.h>
 
-#define MYFILES_LOG_MODULE       "cgi"
-#define MYFILES_LOG_PROC         "myfiles"
+#define MYFILES_LOG_MODULE       (char*)"cgi"
+#define MYFILES_LOG_PROC         (char*)"myfiles"
 
 using namespace std;
 

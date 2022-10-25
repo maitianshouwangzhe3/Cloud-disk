@@ -28,8 +28,8 @@ extern char ** environ;
 #include "../include/cJSON.h"
 #include <sys/time.h>
 
-#define REG_LOG_MODULE       "cgi"
-#define REG_LOG_PROC         "reg"
+#define REG_LOG_MODULE       (char*)"cgi"
+#define REG_LOG_PROC         (char*)"reg"
 // 
 
 using namespace std;
