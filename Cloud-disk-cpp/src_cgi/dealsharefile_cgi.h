@@ -18,14 +18,21 @@ extern char ** environ;
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "../include/make_log.h" //日志头文件
-#include "../include/util_cgi.h"
-#include "../include/deal_mysql.h"
-#include "../include/cfg.h"
-#include "../include/cJSON.h"
-#include "../include/redis_keys.h"
-#include "../include/redis_op.h"
+//#include "make_log.h" //日志头文件
+#include "util_cgi.h"
+#include "deal_mysql.h"
+#include "cfg.h"
+//#include "cJSON.h"
+#include "redis_keys.h"
+#include "redis_op.h"
 #include <sys/time.h>
+
+extern "C"{
+    #include "../include/make_log.h"
+}
+extern "C"{
+    #include "../include/cJSON.h"
+}
 
 #define DEALSHAREFILE_LOG_MODULE       (char*)"cgi"
 #define DEALSHAREFILE_LOG_PROC         (char*)"dealsharefile"

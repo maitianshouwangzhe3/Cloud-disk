@@ -38,16 +38,19 @@ void upload::Init(){
 }
 
 void upload::run(){
-    fcgi_streambuf cin_fcgi_streambuf(request.in);
-    fcgi_streambuf cout_fcgi_streambuf(request.out);
-    fcgi_streambuf cerr_fcgi_streambuf(request.err);
-
-    cin.rdbuf(&cin_fcgi_streambuf);
-    cout.rdbuf(&cout_fcgi_streambuf);
-    cerr.rdbuf(&cerr_fcgi_streambuf);
+    
     while(FCGX_Accept_r(&request) == 0){
+
+        fcgi_streambuf cin_fcgi_streambuf(request.in);
+        fcgi_streambuf cout_fcgi_streambuf(request.out);
+        fcgi_streambuf cerr_fcgi_streambuf(request.err);
+
+        cin.rdbuf(&cin_fcgi_streambuf);
+        cout.rdbuf(&cout_fcgi_streambuf);
+        cerr.rdbuf(&cerr_fcgi_streambuf);
         int ret = 0;
         
+        read_cfg();
 
         char * contentLength = FCGX_GetParam("CONTENT_LENGTH", request.envp);
 
@@ -107,6 +110,15 @@ void upload::run(){
     }
 }
 
+void upload::read_cfg(){
+    cfg::get_cfg_value(CFG_PATH, "mysql", "user", mysql_user);
+    cfg::get_cfg_value(CFG_PATH, "mysql", "password", mysql_pwd);
+    cfg::get_cfg_value(CFG_PATH, "mysql", "database", mysql_db);
+    LOG(UPLOAD_LOG_MODULE, UPLOAD_LOG_PROC, "mysql:[user=%s,pwd=%s,database=%s]", mysql_user, mysql_pwd, mysql_db);
+
+
+}
+
 void upload::tmp(int ret){
     memset(filename, 0, FILE_NAME_LEN);
     memset(user, 0, USER_NAME_LEN);
@@ -132,7 +144,7 @@ void upload::tmp(int ret){
 
     if(out != NULL)
     {
-        printf(out); //给前端反馈信息
+        cout << out; //给前端反馈信息
         free(out);   //记得释放
     }
 }
@@ -169,8 +181,9 @@ int upload::recv_save_file(){
         return -1;
     }
 
-    int ret2 = fread(file_buf, 1, len, stdin); //从标准输入(web服务器)读取内容
-    if(ret2 == 0)
+    //int ret2 = fread(file_buf, 1, len, stdin); //从标准输入(web服务器)读取内容
+    cin.read(file_buf, len);
+    if(strlen(file_buf) == 0)
     {
         LOG(UPLOAD_LOG_MODULE, UPLOAD_LOG_PROC, "fread(file_buf, 1, len, stdin) err\n");
         ret = -1;
@@ -437,6 +450,7 @@ int upload::upload_to_dstorage(){
         wait(NULL); //等待子进程结束，回收其资源
         close(fd[0]);
     }
+    return ret;
 }
 
 /* -------------------------------------------*/
@@ -544,6 +558,7 @@ int upload::make_file_url(){
         //printf("[%s]\n", fdfs_file_url);
         LOG(UPLOAD_LOG_MODULE, UPLOAD_LOG_PROC, "file url is: %s\n", fdfs_file_url);
     }
+    return ret;
 }
 
 int upload::store_fileinfo_to_mysql(){

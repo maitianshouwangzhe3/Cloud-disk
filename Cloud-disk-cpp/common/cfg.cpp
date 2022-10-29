@@ -6,7 +6,7 @@
  * @date
  */
 
-#include"../include/cJSON.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -14,6 +14,7 @@
 #include "../include/cfg.h"
 extern "C"{
     #include "../include/make_log.h"
+    #include"../include/cJSON.h"
 }
 
 /* -------------------------------------------*/
@@ -31,7 +32,7 @@ extern "C"{
 /* -------------------------------------------*/
 int cfg::get_cfg_value(const char *profile, const char *title, const char *key, char *value)
 {
-    LOG(CFG_LOG_MODULE, CFG_LOG_PROC, "2fopen err\n");
+    //LOG(CFG_LOG_MODULE, CFG_LOG_PROC, "2fopen err\n");
     int ret = 0;
     char *buf = NULL;
     FILE *fp = NULL;

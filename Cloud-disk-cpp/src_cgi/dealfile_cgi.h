@@ -18,12 +18,12 @@ extern char ** environ;
 #include <stdlib.h>
 #include <string.h>
  //日志头文件
-#include "../include/util_cgi.h"
-#include "../include/deal_mysql.h"
-#include "../include/redis_keys.h"
-#include "../include/redis_op.h"
-#include "../include/cfg.h"
-#include "../include/cJSON.h"
+#include "util_cgi.h"
+#include "deal_mysql.h"
+#include "redis_keys.h"
+#include "redis_op.h"
+#include "cfg.h"
+#include "cJSON.h"
 #include <sys/time.h>
 
 extern "C"{

@@ -15,8 +15,7 @@ extern char ** environ;
 
 #include "fcgi_config.h"
 #include "fcgi_stdio.h"
-#include "fcgi_config.h"
-#include "fcgi_stdio.h"
+
 
 
 #include <stdio.h>
@@ -27,11 +26,16 @@ extern char ** environ;
 #include <fcntl.h>
 #include <unistd.h>
 #include <sys/wait.h>
-#include "../include/deal_mysql.h"
+#include "deal_mysql.h"
 #include "fcgi_stdio.h"
-#include "../include/make_log.h" //日志头文件
-#include "../include/cfg.h"
-#include "../include/util_cgi.h" //cgi后台通用接口，trim_space(), memstr()
+//#include "make_log.h" //日志头文件
+#include "cfg.h"
+#include "util_cgi.h" //cgi后台通用接口，trim_space(), memstr()
+
+extern "C"{
+    #include "../include/make_log.h"
+}
+
 
 #define UPLOAD_LOG_MODULE (char*)"cgi"
 #define UPLOAD_LOG_PROC   (char*)"upload"

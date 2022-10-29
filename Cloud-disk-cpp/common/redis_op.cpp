@@ -211,7 +211,7 @@ void redis_op::rop_show_keys(redisContext *conn, char* pattern)
 		goto END;
 	}
 
-	for (i = 0; i < reply->elements; ++i) {
+	for (i = 0; i < (int)reply->elements; ++i) {
 		printf("======[%s]======\n", reply->element[i]->str);
 	}
 
@@ -419,7 +419,7 @@ redisContext* redis_op::rop_connectdb(char *ip_str, char* port_str, char *pwd)
 	
 	LOG(REDIS_LOG_MODULE, REDIS_LOG_PROC,"[+][GMS_REDIS]Connect %s:%d SUCCESS!\n", ip_str, port);
 
-END:
+
 	return conn;
 }
 
@@ -1019,7 +1019,7 @@ int redis_op::rop_range_list(redisContext *conn, char *key, int from_pos, int en
 	}
 
 
-    max_count = (reply->elements > count) ? count: reply->elements;
+    max_count = ((int)reply->elements > count) ? count: reply->elements;
     *get_num = max_count;
 
 
@@ -1249,7 +1249,7 @@ int redis_op::rop_zset_zrevrange(redisContext *conn, char *key, int from_pos, in
     //通过element[index] 的方式访问数组元素
     //每个数组元素是一个redisReply对象的指针
 
-    max_count = (reply->elements > count) ? count: reply->elements;
+    max_count = ((int)reply->elements > count) ? count: reply->elements;
     *get_num = max_count; //得到结果value的个数
 
     for (i = 0; i < max_count; ++i)

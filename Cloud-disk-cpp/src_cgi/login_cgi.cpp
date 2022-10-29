@@ -3,6 +3,9 @@
 
 login::login(){
     len = 0;
+    str = "";
+    //user = "";
+    //pwd = "";
     memset(token, 0, sizeof(token));
     memset(buf, 0, sizeof(buf));
     memset(user, 0, sizeof(user));
@@ -54,14 +57,19 @@ void login::run(){
             LOG(LOGIN_LOG_MODULE, LOGIN_LOG_PROC, "len = 0, No data from standard input\n");
         }
         else{                           //获取用户信息
-            char buf[4 * 1024] = {0};
+            
             cin.read(buf, len);         //从cin(web服务器)读取数据
+            //int ret = fread(buf, 1, len, stdin); //从标准输入(web服务器)读取内容
+            //string s(buf);
+            
 
             LOG(LOGIN_LOG_MODULE, LOGIN_LOG_PROC, "buf = %s\n", buf);
 
-            char user[512] = {0};
-            char pwd[512] = {0};
+            
             get_login_info();
+            //auto root = json::parse(s);
+            //user = root["user"];
+            //pwd = root["pwd"];
 
             LOG(LOGIN_LOG_MODULE, LOGIN_LOG_PROC, "user = %s, pwd = %s\n", user, pwd);
 
@@ -91,7 +99,7 @@ void login::run(){
 }
 
 int login::get_login_info(){
-    int ret = 0;
+   int ret = 0;
 
     //解析json包
     //解析一个json字符串为cJSON对象
@@ -174,6 +182,7 @@ int login::check_user_pwd(){
 
     //deal result
     char tmp[PWD_LEN] = {0};
+    //string tmp = "";
 
     //返回值： 0成功并保存记录集，1没有记录集，2有记录集但是没有保存，-1失败
     deal_mysql::process_result_one(conn, sql_cmd, tmp); //执行sql语句，结果集保存在tmp
@@ -219,7 +228,7 @@ int login::set_token(){
 
         return ret;
     }
-
+    //e10adc3949ba59abbe56e057f20f883e
     //产生4个1000以内的随机数
     int rand_num[4] = {0};
     int i = 0;
@@ -276,7 +285,7 @@ int login::set_token(){
     //ret = rop_setex_string(redis_conn, user, 30, token); //30秒
 
 
-END:
+
     if(redis_conn != NULL)
     {
         rp.rop_disconnect(redis_conn);

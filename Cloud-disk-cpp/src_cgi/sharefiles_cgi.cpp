@@ -113,17 +113,19 @@ sharefiles::~sharefiles(){
 
 void sharefiles::run(){
     read_cfg();
-    fcgi_streambuf cin_fcgi_streambuf(request.in);
-    fcgi_streambuf cout_fcgi_streambuf(request.out);
-    fcgi_streambuf cerr_fcgi_streambuf(request.err);
-
-    cin.rdbuf(&cin_fcgi_streambuf);
-    cout.rdbuf(&cout_fcgi_streambuf);
-    cerr.rdbuf(&cerr_fcgi_streambuf);
+    
     while(FCGX_Accept_r(&request) == 0){
+
+        fcgi_streambuf cin_fcgi_streambuf(request.in);
+        fcgi_streambuf cout_fcgi_streambuf(request.out);
+        fcgi_streambuf cerr_fcgi_streambuf(request.err);
+
+        cin.rdbuf(&cin_fcgi_streambuf);
+        cout.rdbuf(&cout_fcgi_streambuf);
+        cerr.rdbuf(&cerr_fcgi_streambuf);
         
-        // 获取URL地址 "?" 后面的内容
-        char* query = getenv("QUERY_STRING");
+        // 获取URL地址 "?" 后面的内容  FCGX_GetParam("QUERY_STRING", request.envp);
+        char* query = FCGX_GetParam("QUERY_STRING", request.envp);
 
         //解析命令
         util_cgi::query_parse_key_value(query, "cmd", cmd, NULL);
@@ -147,7 +149,7 @@ void sharefiles::run(){
                 LOG(SHAREFILES_LOG_MODULE, SHAREFILES_LOG_PROC, "len = 0, No data from standard input\n");
             }
             else{
-                int ret = 0;
+                //int ret = 0;
                 cin.read(buf, len);
 
                 LOG(SHAREFILES_LOG_MODULE, SHAREFILES_LOG_PROC, "buf = %s\n", buf);

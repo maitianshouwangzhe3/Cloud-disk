@@ -2,6 +2,7 @@
 #define _DEAL_MYSQL_H_
 
 #include <mysql/mysql.h> //数据库
+#include <string>
 
 #define SQL_MAX_LEN         (2048)   //sql语句长度
 
@@ -47,7 +48,7 @@ public:
 
     //处理数据库查询结果，结果集保存在buf，只处理一条记录，一个字段, 如果buf为NULL，无需保存结果集，只做判断有没有此记录
     //返回值： 0成功并保存记录集，1没有记录集，2有记录集但是没有保存，-1失败
-    static int process_result_one(MYSQL *conn, char *sql_cmd, char *buf);
+    static int process_result_one(MYSQL *conn, char *sql_cmd, char* buf);
 };
 
 

@@ -19,12 +19,19 @@ extern char ** environ;
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "../include/make_log.h" //日志头文件
-#include "../include/util_cgi.h"
-#include "../include/deal_mysql.h"
-#include "../include/cfg.h"
-#include "../include/cJSON.h"
+//#include "make_log.h" //日志头文件
+#include "util_cgi.h"
+#include "deal_mysql.h"
+#include "cfg.h"
+//#include "cJSON.h"
 #include <sys/time.h>
+
+extern "C"{
+    #include "../include/make_log.h"
+}
+extern "C"{
+    #include "../include/cJSON.h"
+}
 
 #define MD5_LOG_MODULE       (char*)"cgi"
 #define MD5_LOG_PROC         (char*)"md5"

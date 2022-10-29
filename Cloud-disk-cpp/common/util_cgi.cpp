@@ -11,11 +11,12 @@
 #include <stdlib.h>
 //#include <json/json.h>
 #include "../include/util_cgi.h"
-#include "../include/cJSON.h"
+
 
 //#include "../include/make_log.h"
 extern "C"{
     #include "../include/make_log.h"
+    #include "../include/cJSON.h"
 }
 
 #include "../include/cfg.h"

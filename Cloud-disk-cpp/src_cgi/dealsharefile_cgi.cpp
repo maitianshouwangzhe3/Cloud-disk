@@ -62,7 +62,7 @@ void dealsharefile::run(){
             LOG(DEALSHAREFILE_LOG_MODULE, DEALSHAREFILE_LOG_PROC, "len = 0, No data from standard input\n");
         }
 
-        int ret = 0;
+        //int ret = 0;
 
         cin.read(buf, len);
         LOG(DEALSHAREFILE_LOG_MODULE, DEALSHAREFILE_LOG_PROC, "buf = %s\n", buf);
@@ -113,7 +113,7 @@ int dealsharefile::save_file(){
     int ret = 0;
     char sql_cmd[SQL_MAX_LEN] = {0};
     
-    char *out = NULL;
+    //char *out = NULL;
     int ret2 = 0;
     char tmp[512] = {0};
     
@@ -273,7 +273,7 @@ int dealsharefile::cancel_share_file(){
     char sql_cmd[SQL_MAX_LEN] = {0};
     
     redisContext * redis_conn = NULL;
-    char *out = NULL;
+    //char *out = NULL;
     char fileid[1024] = {0};
     redis_op rp;
 
@@ -429,7 +429,7 @@ int dealsharefile::pv_file(){
     int ret = 0;
     char sql_cmd[SQL_MAX_LEN] = {0};
     
-    char *out = NULL;
+    //char *out = NULL;
     char tmp[512] = {0};
     int ret2 = 0;
     redisContext * redis_conn = NULL;

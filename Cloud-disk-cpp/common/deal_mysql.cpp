@@ -79,7 +79,7 @@ void deal_mysql::process_result_test(MYSQL *conn, MYSQL_RES *res_set){
 	{
 
 		//mysql_num_fields获取结果中列的个数
-        for(i = 0; i < mysql_num_fields(res_set); i++)
+        for(i = 0; i < (int)mysql_num_fields(res_set); i++)
 		{
             if (i > 0)
 			{
@@ -114,7 +114,7 @@ void deal_mysql::process_result_test(MYSQL *conn, MYSQL_RES *res_set){
  * @returns 0成功并保存记录集，1没有记录集，2有记录集但是没有保存，-1失败
  */
 /* -------------------------------------------*/
-int deal_mysql::process_result_one(MYSQL *conn, char *sql_cmd, char *buf){
+int deal_mysql::process_result_one(MYSQL *conn, char *sql_cmd, char* buf){
     int ret = 0;
     long line = 0;
 

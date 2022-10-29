@@ -115,7 +115,7 @@ int md5::deal_md5(){
     int ret2 = 0;
     char tmp[512] = {0};
     char sql_cmd[SQL_MAX_LEN] = {0};
-    char *out = NULL;
+    //char *out = NULL;
 
     //connect the database
     conn = deal_mysql::msql_conn(mysql_user, mysql_pwd, mysql_db);

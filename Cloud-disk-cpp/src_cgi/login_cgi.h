@@ -10,31 +10,46 @@ extern char ** environ;
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "../include/make_log.h" //日志头文件
+//#include "make_log.h" //日志头文件 ../include/
 #include "../include/util_cgi.h"
 #include "../include/deal_mysql.h"
 #include "../include/redis_op.h"
 #include "../include/cfg.h"
-#include "../include/cJSON.h"
+//#include "cJSON.h"
 #include "../include/des.h"    //加密
 #include "../include/base64.h" //base64
 #include "../include/md5.h"    //md5
 #include <time.h>
+#include <string>
+//#include <nlohmann/json.hpp>
+
+extern "C"{
+    #include "../include/make_log.h"
+    #include "../include/cJSON.h"
+}
+
+
+
 //  g++ -o login login_cgi.cpp ../common/redis_op.cpp ../common/des.cpp ../common/base64.cpp ../common/md5.cpp ../common/make_log.cpp ../common/util_cgi.cpp ../common/deal_mysql.cpp ../common/cfg.cpp ../common/cJSON.cpp -lmysqlclient -lm -lfcgi -lhiredis  -I /usr/local/include -L /usr/local/lib -lfcgi -lstdc++ -lfcgi++
 #define LOGIN_LOG_MODULE (char*)"cgi"
 #define LOGIN_LOG_PROC   (char*)"login"
 
+//using json = nlohmann::json;
 using namespace std;
 
 
 class login{
 private:
     int len;
+    string str;
+    
 
     char token[128];
     char buf[1024 * 4];
     char user[512];
     char pwd[512];
+    //string user;
+    //string pwd;
 
     streambuf * cin_streambuf;
     streambuf * cout_streambuf;

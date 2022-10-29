@@ -231,7 +231,7 @@ int dealfile::pv_file(){
     int ret = 0;
     char sql_cmd[SQL_MAX_LEN] = {0};
     
-    char *out = NULL;
+    //char *out = NULL;
     char tmp[512] = {0};
     int ret2 = 0;
 
@@ -575,7 +575,7 @@ int dealfile::share_file(){
     char sql_cmd[SQL_MAX_LEN] = {0};
     
     redisContext * redis_conn = NULL;
-    char *out = NULL;
+    //char *out = NULL;
     char tmp[512] = {0};
     char fileid[1024] = {0};
     int ret2 = 0;
