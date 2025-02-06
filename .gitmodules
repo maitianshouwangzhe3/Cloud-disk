@@ -1,0 +1,6 @@
+[submodule "code/rapidjson"]
+	path = code/rapidjson
+	url = https://github.com/Tencent/rapidjson.git
+[submodule "code/muduo"]
+	path = code/muduo
+	url = https://github.com/chenshuo/muduo.git
