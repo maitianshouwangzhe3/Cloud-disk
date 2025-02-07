@@ -16,6 +16,7 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/mysql)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/redis)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/api)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/muduo)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/spdlog/include)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
 set(SERVER_CODE 
@@ -31,6 +32,7 @@ set(SERVER_CODE
 )
 
 # add_subdirectory(rapidjson)
+add_subdirectory(spdlog)
 add_subdirectory(muduo)
 add_executable(Cloud-disk ${SERVER_CODE})
-target_link_libraries(Cloud-disk pthread mysqlclient hiredis muduo_net)
+target_link_libraries(Cloud-disk pthread mysqlclient hiredis muduo_net spdlog)

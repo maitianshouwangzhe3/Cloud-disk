@@ -403,7 +403,7 @@ int ApiUpload(string &url, string &post_data, string &str_json) {
     if (uploadFileToFastDfs(new_file_path, fileid) < 0) {
         ret = unlink(new_file_path);
         if (ret != 0) {
-// 删除失败则需要有个监控重新清除过期的临时文件，比如过期两天的都删除
+            // 删除失败则需要有个监控重新清除过期的临时文件，比如过期两天的都删除
         }
         ret = -1;
         goto END;
@@ -411,7 +411,7 @@ int ApiUpload(string &url, string &post_data, string &str_json) {
     //================> 删除本地临时存放的上传文件 <===============
     ret = unlink(new_file_path);
     if (ret != 0) {
-// 删除失败则需要有个监控重新清除过期的临时文件，比如过期两天的都删除
+        // 删除失败则需要有个监控重新清除过期的临时文件，比如过期两天的都删除
     }
     //================> 得到文件所存放storage的host_name <=================
     // 拼接出完整的http地址
@@ -438,6 +438,10 @@ int ApiUpload(string &url, string &post_data, string &str_json) {
     writer.Int(0);
     writer.EndObject();
     str_json = buffer.GetString();
+    ret = unlink(new_file_path);
+    if (ret != 0) {
+        // 删除失败则需要有个监控重新清除过期的临时文件，比如过期两天的都删除
+    }
     
     return 0;
 END:

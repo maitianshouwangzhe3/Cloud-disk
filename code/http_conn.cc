@@ -7,7 +7,7 @@
 #include "http_conn.h"
 
 #include "muduo/net/TcpConnection.h"
-#include "muduo/base/Logging.h"
+//#include "muduo/base/Logging.h"
 #include "muduo/base/Timestamp.h"
 #include "api_dealfile.h"
 #include "api_deal_sharefile.h"
@@ -18,6 +18,7 @@
 #include "api_sharepicture.h"
 #include "api_register.h"
 #include "api_upload.h"
+#include "log.h"
  
 //////////////////////////
 CHttpConn::CHttpConn(TcpConnectionPtr tcp_conn):
@@ -45,7 +46,7 @@ void CHttpConn::OnRead(Buffer *buf) // CHttpConn业务层面的OnRead
     if (http_parser_.IsReadAll()) {
         string url = http_parser_.GetUrlString();
         string content = http_parser_.GetBodyContentString();
-        LOG_INFO << "url: " << url << ", content: " << content;                     // for debug
+        LOG_INFO("url: {}, content: {}", url, content);
 
         if (strncmp(url.c_str(), "/api/reg", 8) == 0) { // 注册  url 路由。 根据根据url快速找到对应的处理函数， 能不能使用map，hash
             _HandleRegisterRequest(url, content);
@@ -69,7 +70,8 @@ void CHttpConn::OnRead(Buffer *buf) // CHttpConn业务层面的OnRead
             _HandleHtml(url, content);
         }
          else {
-            LOG_ERROR << "url unknown, url= " << url;
+            //LOG_ERROR << "url unknown, url= " << url;
+            LOG_ERROR("url unknown, url= {}", url.c_str());
             char *szContent = new char[HTTP_RESPONSE_JSON_MAX];
             string str_json = "{\"status\":\"bad request\"}"; 
             uint32_t ulen = str_json.size();

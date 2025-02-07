@@ -1,6 +1,8 @@
 #include "db_pool.h"
+#include <mysql/mysql.h>
 #include <string.h>
-#include "muduo/base/Logging.h"
+//#include "muduo/base/Logging.h"
+#include "log.h"
 #include "config_file_reader.h"
 
 
@@ -18,7 +20,7 @@ CResultSet::CResultSet(MYSQL_RES *res) {
     for (int i = 0; i < num_fields; i++) {
         // 多行
         key_map_.insert(make_pair(fields[i].name, i)); // 每个结构提供了结果集中1列的字段定义
-        LOG_DEBUG << " num_fields fields["<< i << "].name: " <<  fields[i].name;
+        LOG_DEBUG("num_fields fields[{}].name: {}", i, fields[i].name);
     }
 }
 
@@ -90,13 +92,12 @@ bool CPrepareStatement::Init(MYSQL *mysql, string &sql) {
     // g_master_conn_fail_num ++;
     stmt_ = mysql_stmt_init(mysql);
     if (!stmt_) {
-        LOG_ERROR << "mysql_stmt_init failed";
+        LOG_ERROR("{} mysql_stmt_init failed", __LINE__);
         return false;
     }
 
     if (mysql_stmt_prepare(stmt_, sql.c_str(), sql.size())) {
-        LOG_ERROR << "mysql_stmt_prepare failed: " <<  mysql_stmt_error(stmt_);
-
+        LOG_ERROR("mysql_stmt_prepare failed: {}", mysql_stmt_error(stmt_));
         return false;
     }
 
@@ -104,7 +105,7 @@ bool CPrepareStatement::Init(MYSQL *mysql, string &sql) {
     if (param_cnt_ > 0) {
         param_bind_ = new MYSQL_BIND[param_cnt_];
         if (!param_bind_) {
-            LOG_ERROR << "new failed";
+            LOG_ERROR("{} new failed", __LINE__);
             return false;
         }
 
@@ -116,7 +117,7 @@ bool CPrepareStatement::Init(MYSQL *mysql, string &sql) {
 
 void CPrepareStatement::SetParam(uint32_t index, int &value) {
     if (index >= param_cnt_) {
-        LOG_ERROR << "index too large: " <<  index;
+        LOG_ERROR("index too large: {}", index);
         return;
     }
 
@@ -126,7 +127,7 @@ void CPrepareStatement::SetParam(uint32_t index, int &value) {
 
 void CPrepareStatement::SetParam(uint32_t index, uint32_t &value) {
     if (index >= param_cnt_) {
-        LOG_ERROR << "index too large: " <<  index;
+        LOG_ERROR("index too large: {}", index);
         return;
     }
 
@@ -136,7 +137,7 @@ void CPrepareStatement::SetParam(uint32_t index, uint32_t &value) {
 
 void CPrepareStatement::SetParam(uint32_t index, string &value) {
     if (index >= param_cnt_) {
-        LOG_ERROR << "index too large: " <<  index;
+        LOG_ERROR("index too large: {}", index);
         return;
     }
 
@@ -147,7 +148,7 @@ void CPrepareStatement::SetParam(uint32_t index, string &value) {
 
 void CPrepareStatement::SetParam(uint32_t index, const string &value) {
     if (index >= param_cnt_) {
-        LOG_ERROR << "index too large: " <<  index;
+        LOG_ERROR("index too large: {}", index);
         return;
     }
 
@@ -158,22 +159,22 @@ void CPrepareStatement::SetParam(uint32_t index, const string &value) {
 
 bool CPrepareStatement::ExecuteUpdate() {
     if (!stmt_) {
-        LOG_ERROR << "no m_stmt"; 
+        LOG_ERROR("{} no m_stmt", __LINE__);
         return false;
     }
 
     if (mysql_stmt_bind_param(stmt_, param_bind_)) {
-        LOG_ERROR << "mysql_stmt_bind_param failed: " <<  mysql_stmt_error(stmt_);
+        LOG_ERROR("mysql_stmt_bind_param failed: {}", mysql_stmt_error(stmt_));
         return false;
     }
 
     if (mysql_stmt_execute(stmt_)) {
-        LOG_ERROR << "mysql_stmt_execute failed: " <<  mysql_stmt_error(stmt_);
+        LOG_ERROR("mysql_stmt_execute failed: {}", mysql_stmt_error(stmt_));
         return false;
     }
 
     if (mysql_stmt_affected_rows(stmt_) == 0) {
-        LOG_ERROR << "ExecuteUpdate have no effect"; 
+        LOG_ERROR("{} ExecuteUpdate have no effect", __LINE__);
         return false;
     }
 
@@ -199,21 +200,24 @@ CDBConn::~CDBConn() {
 int CDBConn::Init() {
     mysql_ = mysql_init(NULL); // mysql_标准的mysql c client对应的api
     if (!mysql_) {
-        LOG_ERROR << "mysql_init failed"; 
-
+        LOG_ERROR("{} mysql_init failed", __LINE__);
         return 1;
     }
 
     int reconnect = 1;
     // mysql_options(mysql_, MYSQL_OPT_RECONNECT,  &reconnect); // 配合mysql_ping实现自动重连
     mysql_options(mysql_, MYSQL_SET_CHARSET_NAME, "utf8mb4"); // utf8mb4和utf8区别
+    // 设置自动重连选项
+    if (mysql_options(mysql_, MYSQL_OPT_RECONNECT, &reconnect) != 0) {
+        LOG_ERROR("mysql_options() failed: {}", mysql_error(mysql_));
+    }
 
     // ip 端口 用户名 密码 数据库名
     if (!mysql_real_connect(mysql_, db_pool_->GetDBServerIP(),
                             db_pool_->GetUsername(), db_pool_->GetPasswrod(),
                             db_pool_->GetDBName(), db_pool_->GetDBServerPort(),
                             NULL, 0)) {
-        LOG_ERROR << "mysql_real_connect failed: " <<  mysql_error(mysql_);
+        LOG_ERROR("mysql_real_connect failed: {}", mysql_error(mysql_));
         return 2;
     }
 
@@ -226,7 +230,7 @@ bool CDBConn::ExecuteCreate(const char *sql_query) {
     mysql_ping(mysql_);
     // mysql_real_query 实际就是执行了SQL
     if (mysql_real_query(mysql_, sql_query, strlen(sql_query))) {
-        LOG_ERROR << "mysql_real_query failed: " <<  mysql_error(mysql_); 
+        LOG_ERROR("mysql_real_query failed: {}", mysql_error(mysql_));
         return false;
     }
 
@@ -237,7 +241,7 @@ bool CDBConn::ExecutePassQuery(const char *sql_query) {
     mysql_ping(mysql_);
     // mysql_real_query 实际就是执行了SQL
     if (mysql_real_query(mysql_, sql_query, strlen(sql_query))) {
-        LOG_ERROR << "mysql_real_query failed: " <<  mysql_error(mysql_); 
+        LOG_ERROR("mysql_real_query failed: {}", mysql_error(mysql_));
         return false;
     }
 
@@ -248,7 +252,7 @@ bool CDBConn::ExecuteDrop(const char *sql_query) {
     mysql_ping(mysql_); // 如果端开了，能够自动重连
 
     if (mysql_real_query(mysql_, sql_query, strlen(sql_query))) {
-        LOG_ERROR << "mysql_real_query failed: " <<  mysql_error(mysql_); 
+        LOG_ERROR("mysql_real_query failed: {}", mysql_error(mysql_));
         return false;
     }
 
@@ -259,7 +263,7 @@ CResultSet *CDBConn::ExecuteQuery(const char *sql_query) {
     mysql_ping(mysql_);
     row_num = 0;
     if (mysql_real_query(mysql_, sql_query, strlen(sql_query))) {
-        LOG_ERROR << "mysql_real_query failed: " << mysql_error(mysql_) << ", sql:" << sql_query;
+        LOG_ERROR("[{}] mysql_real_query failed: {}, sql: {}", __LINE__, mysql_error(mysql_), sql_query);
         return NULL;
     }
     // 返回结果
@@ -267,7 +271,7 @@ CResultSet *CDBConn::ExecuteQuery(const char *sql_query) {
         mysql_); // 返回结果 https://www.mysqlzh.com/api/66.html
     if (!res) // 如果查询未返回结果集和读取结果集失败都会返回NULL
     {
-        LOG_ERROR << "mysql_store_result failed: " <<  mysql_error(mysql_);
+        LOG_ERROR("[{}] mysql_store_result failed: {}", __LINE__, mysql_error(mysql_));
         return NULL;
     }
     row_num = mysql_num_rows(res);
@@ -290,7 +294,7 @@ bool CDBConn::ExecuteUpdate(const char *sql_query, bool care_affected_rows) {
     mysql_ping(mysql_);
 
     if (mysql_real_query(mysql_, sql_query, strlen(sql_query))) {
-        LOG_ERROR << "mysql_real_query failed: " << mysql_error(mysql_) << ", sql:" << sql_query;
+        LOG_ERROR("mysql_real_query failed: {}, sql: {}", mysql_error(mysql_), sql_query);
         return false;
     }
 
@@ -298,10 +302,10 @@ bool CDBConn::ExecuteUpdate(const char *sql_query, bool care_affected_rows) {
         return true;
     } else {                      // 影响的行数为0时
         if (care_affected_rows) { // 如果在意影响的行数时, 返回false,否则返回true            
-            LOG_ERROR << "mysql_real_query failed: " << mysql_error(mysql_) << ", sql:" << sql_query;
+            LOG_ERROR("mysql_real_query failed: {}, sql: {}", mysql_error(mysql_), sql_query);
             return false;
         } else {
-            LOG_WARN << "affected_rows=0, sql: " <<  sql_query;
+            LOG_ERROR("affected_rows=0, sql: {}", sql_query);
             return true;
         }
     }
@@ -311,7 +315,7 @@ bool CDBConn::StartTransaction() {
     mysql_ping(mysql_);
 
     if (mysql_real_query(mysql_, "start transaction\n", 17)) {
-        LOG_ERROR << "mysql_real_query failed: " << mysql_error(mysql_) << " start transaction failed";
+        LOG_ERROR("mysql_real_query failed: {} start transaction failed", mysql_error(mysql_));
         return false;
     }
 
@@ -322,7 +326,7 @@ bool CDBConn::Rollback() {
     mysql_ping(mysql_);
 
     if (mysql_real_query(mysql_, "rollback\n", 8)) {
-        LOG_ERROR << "mysql_real_query failed: " << mysql_error(mysql_) << ", sql: rollback";
+        LOG_ERROR("mysql_real_query failed: {}, sql: rollback", mysql_error(mysql_));
         return false;
     }
 
@@ -333,7 +337,7 @@ bool CDBConn::Commit() {
     mysql_ping(mysql_);
 
     if (mysql_real_query(mysql_, "commit\n", 6)) {
-        LOG_ERROR << "mysql_real_query failed: " << mysql_error(mysql_) << ", sql: commit";
+        LOG_ERROR("mysql_real_query failed: {}, sql: commit", mysql_error(mysql_));
         return false;
     }
 
@@ -399,7 +403,7 @@ int CDBPool::Init() {
 CDBConn *CDBPool::GetDBConn(const int timeout_ms) {
     std::unique_lock<std::mutex> lock(mutex_);
     if (abort_request_) {
-        LOG_WARN << "have aboort"; 
+        LOG_WARN("{} have aboort", __LINE__);
         return NULL;
     }
 
@@ -430,7 +434,7 @@ CDBConn *CDBPool::GetDBConn(const int timeout_ms) {
             }
 
             if (abort_request_) {
-                LOG_WARN << "have abort"; 
+                LOG_WARN("{} have abort", __LINE__);
                 return NULL;
             }
         } else // 还没有到最大连接则创建连接
@@ -438,7 +442,7 @@ CDBConn *CDBPool::GetDBConn(const int timeout_ms) {
             CDBConn *db_conn = new CDBConn(this); //新建连接
             int ret = db_conn->Init();
             if (ret) {
-                LOG_ERROR << "Init DBConnecton failed"; 
+                LOG_WARN("{} Init DBConnecton failed", __LINE__);
                 delete db_conn;
                 return NULL;
             } else {
@@ -472,7 +476,7 @@ void CDBPool::RelDBConn(CDBConn *pConn) {
         free_list_.push_back(pConn);
         cond_var_.notify_one(); // 通知取队列
     } else {
-        LOG_WARN << "RelDBConn failed";  // 不再次回收连接
+        LOG_WARN("{} RelDBConn failed", __LINE__);
     }
 }
 // 遍历检测是否超时未归还
@@ -502,13 +506,13 @@ void CDBManager::SetConfPath(const char *conf_path)
 }
 
 int CDBManager::Init() {
-    LOG_INFO << "Init";
+    LOG_INFO("{} Init", __LINE__);
     CConfigFileReader config_file(conf_path_.c_str());
 
     char *db_instances = config_file.GetConfigName("DBInstances");
 
     if (!db_instances) {
-        LOG_ERROR << "not configure DBInstances"; 
+        LOG_ERROR("{} not configure DBInstances", __LINE__);
         return 1;
     }
 
@@ -535,14 +539,11 @@ int CDBManager::Init() {
         char *db_username = config_file.GetConfigName(username);
         char *db_password = config_file.GetConfigName(password);
         char *str_maxconncnt = config_file.GetConfigName(maxconncnt);
-
-        LOG_INFO << "db_host: " << db_host << ", db_port:" << str_db_port << 
-                ", db_dbname:" << db_dbname << ", db_username:" << db_username << 
-                ", db_password: " << db_password;
+        LOG_INFO("db_host: {}, db_port: {}, db_dbname: {}, db_username: {}, db_password: {}", __LINE__, db_host, str_db_port, db_dbname, db_username, db_password);
 
         if (!db_host || !str_db_port || !db_dbname || !db_username ||
             !db_password || !str_maxconncnt) {
-            LOG_ERROR << "not configure db instance: " << pool_name;
+            LOG_ERROR("not configure db instance: {}", pool_name);
             return 2;
         }
 
@@ -551,7 +552,7 @@ int CDBManager::Init() {
         CDBPool *pDBPool = new CDBPool(pool_name, db_host, db_port, db_username,
                                        db_password, db_dbname, db_maxconncnt);
         if (pDBPool->Init()) {
-            LOG_ERROR << "init db instance failed: " << pool_name;
+            LOG_ERROR("init db instance failed: {}", pool_name);
             return 3;
         }
         dbpool_map_.insert(make_pair(pool_name, pDBPool));

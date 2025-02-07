@@ -4,3 +4,6 @@
 [submodule "code/muduo"]
 	path = code/muduo
 	url = https://github.com/chenshuo/muduo.git
+[submodule "code/spdlog"]
+	path = code/spdlog
+	url = https://github.com/gabime/spdlog.git

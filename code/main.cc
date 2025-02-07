@@ -4,7 +4,6 @@
 #include <signal.h>
 #include <boost/any.hpp>
 #include "muduo/net/TcpServer.h"
-#include "muduo/base/Logging.h"
 #include "muduo/net/EventLoop.h"
 #include "muduo/base/ThreadPool.h"
 #include "http_conn.h"
@@ -14,7 +13,7 @@
 #include "api_upload.h"
 #include "api_common.h"
 #include "api_dealfile.h" 
-
+#include "log.h"
  
 using CHttpConnPtr = std::shared_ptr<CHttpConn>;
 
@@ -34,8 +33,10 @@ public:
         ,num_threads_(num_threads)
         ,tcp_no_delay_(nodelay)
     {
-        LOG_INFO << "Use " << num_event_loops << " IO threads,  " << num_threads <<  " work Threds.";
-        LOG_INFO << "TCP no delay " << nodelay;
+        //LOG_INFO << "Use " << num_event_loops << " IO threads,  " << num_threads <<  " work Threds.";
+        //LOG_INFO << "TCP no delay " << nodelay;
+        LOG_INFO("Use {} IO threads,  {} work Threds.", num_event_loops, num_threads);
+        LOG_INFO("TCP no delay {}", nodelay);
 
         // 注册连接事件的回调函数，新连接或者断开都回调
         server_.setConnectionCallback(std::bind(&HttpServer::onConnection, this, std::placeholders::_1));
@@ -61,10 +62,12 @@ private:
         {
             if(tcp_no_delay_)      
                 conn->setTcpNoDelay(true);
-            LOG_INFO << "Connection UP :" << conn->peerAddress().toIpPort();
+            //LOG_INFO << "Connection UP :" << conn->peerAddress().toIpPort();
+            LOG_INFO("Connection UP : {}", conn->peerAddress().toIpPort().c_str());
             
             uint32_t uuid = conn_uuid_generator_++;
-            LOG_INFO << "Connection UP: " << conn.get() << ", uuid: " <<  uuid;
+            //LOG_INFO << "Connection UP: " << conn.get() << ", uuid: " <<  uuid;
+            LOG_INFO("Connection UP: {}, uuid: {}", conn.get()->getTcpInfoString().c_str(), uuid);
             conn->setContext(uuid);
             // 新建一个CHttpConn，然后绑定 tcp TcpConnectionPtr
             CHttpConnPtr http_conn =  std::make_shared<CHttpConn>(conn);
@@ -76,7 +79,8 @@ private:
         else
         {
             uint32_t uuid = boost::any_cast<uint32_t>( conn->getContext());
-            LOG_INFO << "Connection DOWN : " << conn.get()<< ", uuid: " << uuid;
+            //LOG_INFO << "Connection DOWN : " << conn.get()<< ", uuid: " << uuid;
+            LOG_INFO("Connection DOWN : {}, uuid: {}", conn.get()->getTcpInfoString().c_str(), uuid);
             std::lock_guard<std::mutex> ulock(mtx_); //自动释放
             CHttpConnPtr &http_conn = s_http_map[uuid];
             if(http_conn) {
@@ -90,7 +94,8 @@ private:
     void onMessage(const TcpConnectionPtr &conn, Buffer *buf, Timestamp time)
     {
         uint32_t uuid = boost::any_cast<uint32_t>(conn->getContext());
-        LOG_INFO << "TCP Conn: " << conn.get() << ", uuid: " << uuid << " have msg";
+        //LOG_INFO << "TCP Conn: " << conn.get() << ", uuid: " << uuid << " have msg";
+        LOG_INFO("TCP Conn: {}, uuid: {}, have msg", conn.get()->getTcpInfoString().c_str(), uuid);
         //然后管理tcp长连接？
         // std::string msg = buf->retrieveAllAsString();  //这里
    
@@ -102,7 +107,8 @@ private:
             // http_conn->OnRead(buf);  // 直接在io线程处理
             thread_pool_.run(std::bind(&CHttpConn::OnRead, http_conn, buf)); //给到业务线程处理
         } else {
-            LOG_ERROR << "TCP Conn: " << conn.get() << ", uuid: " << uuid << " have broken";
+            //LOG_ERROR << "TCP Conn: " << conn.get() << ", uuid: " << uuid << " have broken";
+            LOG_ERROR("TCP Conn: {}, uuid: {}, have broken", conn.get()->getTcpInfoString().c_str(), uuid);
             conn->shutdown();   // 
         }
     }
@@ -110,7 +116,8 @@ private:
     void onWriteComplete(const TcpConnectionPtr& conn) //这个函数不是用来关闭的
     {
         uint32_t uuid =  boost::any_cast<uint32_t>(conn->getContext());
-        LOG_INFO << "TCP Conn: " << conn.get() << ", uuid: " << uuid << " have WriteComplete";  //发送完毕先在这里有反馈
+        //LOG_INFO << "TCP Conn: " << conn.get() << ", uuid: " << uuid << " have WriteComplete";  //发送完毕先在这里有反馈
+        LOG_INFO("TCP Conn: {}, uuid: {}, have WriteComplete", conn.get()->getTcpInfoString().c_str(), uuid);
     }
 
     EventLoop *loop_;
@@ -160,8 +167,8 @@ int main(int argc, char *argv[]) {
 
     //日志设置级别
     char *str_log_level =  config_file.GetConfigName("log_level");  
-    Logger::LogLevel log_level = static_cast<Logger::LogLevel>(atoi(str_log_level));
-    Logger::setLogLevel(log_level);
+    //Logger::LogLevel log_level = static_cast<Logger::LogLevel>(atoi(str_log_level));
+    //Logger::setLogLevel(log_level);
 
 
 
@@ -180,14 +187,16 @@ int main(int argc, char *argv[]) {
     CacheManager::SetConfPath(str_tc_http_server_conf); //设置配置文件路径
     CacheManager *cache_manager = CacheManager::getInstance();
     if (!cache_manager) {
-        LOG_ERROR <<"CacheManager init failed";
+        //LOG_ERROR <<"CacheManager init failed";
+        LOG_ERROR("CacheManager init failed {}", str_tc_http_server_conf);
         return -1;
     }
 
     CDBManager::SetConfPath(str_tc_http_server_conf);   //设置配置文件路径
     CDBManager *db_manager = CDBManager::getInstance();
     if (!db_manager) {
-        LOG_ERROR <<"DBManager init failed";
+        //LOG_ERROR <<"DBManager init failed";
+        LOG_ERROR("DBManager init failed {}", str_tc_http_server_conf);
         return -1;
     }
 
@@ -202,7 +211,8 @@ int main(int argc, char *argv[]) {
     ret = ApiDealfileInit(dfs_path_client);
 
     if (ApiInit() < 0) {
-        LOG_ERROR << "ApiInit failed";
+        //LOG_ERROR << "ApiInit failed";
+        LOG_ERROR("ApiInit failed {}", "ApiInit failed");
         return -1;
     }
 
