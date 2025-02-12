@@ -24,6 +24,7 @@ public:
     template <typename... Args>
     void async_error(const char* format, Args &&...args) {
         m_logger->error(format, std::forward<Args>(args)...);
+        m_logger->flush();
     }
 
     template <typename... Args>

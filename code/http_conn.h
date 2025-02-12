@@ -9,6 +9,8 @@
 #include "muduo/net/TcpConnection.h"
 #include "muduo/net/Buffer.h"
 
+#include <unordered_map>
+
 using namespace muduo;
 using namespace muduo::net;
 #define READ_BUF_SIZE 2048
@@ -69,6 +71,8 @@ public:
     //
     int _HandleSharepictureRequest(string &url, string &post_data);
     int  _HandleHtml(string &url, string &post_data);
+
+    int _HandleGetShare(std::unordered_map<string, string>& params);
 
   protected:
      uint32_t conn_handle_;

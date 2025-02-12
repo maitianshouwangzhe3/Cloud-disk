@@ -3,6 +3,7 @@
 #include <sstream>
 #include <string.h>
 #include <boost/any.hpp>
+#include <unordered_map>
 
 #include "http_conn.h"
 
@@ -18,6 +19,7 @@
 #include "api_sharepicture.h"
 #include "api_register.h"
 #include "api_upload.h"
+#include "api_share.h"
 #include "log.h"
  
 //////////////////////////
@@ -42,11 +44,11 @@ void CHttpConn::OnRead(Buffer *buf) // CHttpConn业务层面的OnRead
 {
     const char *in_buf = buf->peek();
     size_t buf_len = buf->readableBytes();
-     http_parser_.ParseHttpContent(in_buf, buf_len); // 1. 从socket接口读取数据；2.然后把数据放到buffer in_buf; 3.http解析
+    http_parser_.ParseHttpContent(in_buf, buf_len); // 1. 从socket接口读取数据；2.然后把数据放到buffer in_buf; 3.http解析
     if (http_parser_.IsReadAll()) {
         string url = http_parser_.GetUrlString();
         string content = http_parser_.GetBodyContentString();
-        LOG_INFO("url: {}, content: {}", url, content);
+        LOG_INFO("url: {}, content: {}, content_type {}", url, content, http_parser_.GetContentType());
 
         if (strncmp(url.c_str(), "/api/reg", 8) == 0) { // 注册  url 路由。 根据根据url快速找到对应的处理函数， 能不能使用map，hash
             _HandleRegisterRequest(url, content);
@@ -68,15 +70,16 @@ void CHttpConn::OnRead(Buffer *buf) // CHttpConn业务层面的OnRead
             _HandleUploadRequest(url, content);
         } else if (strncmp(url.c_str(), "/api/html", 9) == 0) {   //  测试网页
             _HandleHtml(url, content);
+        } else if (strncmp(url.c_str(), "/api/share", 10) == 0) {   //  GET sharefile
+            _HandleGetShare(http_parser_.GetParams());
         }
-         else {
-            //LOG_ERROR << "url unknown, url= " << url;
-            LOG_ERROR("url unknown, url= {}", url.c_str());
+        else {
             char *szContent = new char[HTTP_RESPONSE_JSON_MAX];
-            string str_json = "{\"status\":\"bad request\"}"; 
+            LOG_ERROR("url unknown, url= {}", url.c_str());
+
+            string str_json = "{\"status\":\"bad request\"}";
             uint32_t ulen = str_json.size();
-            snprintf(szContent, HTTP_RESPONSE_JSON_MAX, HTTP_RESPONSE_BAD_REQ, ulen,
-                str_json.c_str()); 	
+            snprintf(szContent, HTTP_RESPONSE_JSON_MAX, HTTP_RESPONSE_BAD_REQ, ulen, str_json.c_str());
             tcp_conn_->send(szContent);
         }
     }
@@ -98,8 +101,7 @@ int CHttpConn::_HandleUploadRequest(string &url, string &post_data) {
     int ret = ApiUpload(url, post_data, str_json);
     char *szContent = new char[HTTP_RESPONSE_JSON_MAX];
     uint32_t ulen = str_json.length();
-    snprintf(szContent, HTTP_RESPONSE_JSON_MAX, HTTP_RESPONSE_JSON, ulen,
-             str_json.c_str());
+    snprintf(szContent, HTTP_RESPONSE_JSON_MAX, HTTP_RESPONSE_JSON, ulen, str_json.c_str());
     tcp_conn_->send(szContent);         
     // tcp_conn_->send(szContent); // 返回值暂时不做处理
     delete[] szContent;
@@ -116,8 +118,7 @@ int CHttpConn::_HandleRegisterRequest(string &url, string &post_data) {
 	int ret = ApiRegisterUser(url, post_data, resp_json);
 	char *http_body = new char[HTTP_RESPONSE_JSON_MAX];
 	uint32_t ulen = resp_json.length();
-	snprintf(http_body, HTTP_RESPONSE_JSON_MAX, HTTP_RESPONSE_JSON, ulen,
-        resp_json.c_str()); 	
+	snprintf(http_body, HTTP_RESPONSE_JSON_MAX, HTTP_RESPONSE_JSON, ulen, resp_json.c_str()); 	
     tcp_conn_->send(http_body);
     delete[] http_body;
     // LOG_INFO << "tcp_conn_->send  "; 
@@ -153,8 +154,7 @@ int CHttpConn::_HandleDealfileRequest(string &url, string &post_data) {
     int ret = ApiDealfile(url, post_data, str_json);
     char *szContent = new char[HTTP_RESPONSE_JSON_MAX];
     uint32_t ulen = str_json.length();
-    snprintf(szContent, HTTP_RESPONSE_JSON_MAX, HTTP_RESPONSE_JSON, ulen,
-             str_json.c_str());
+    snprintf(szContent, HTTP_RESPONSE_JSON_MAX, HTTP_RESPONSE_JSON, ulen, str_json.c_str());
     tcp_conn_->send(szContent);
     delete[] szContent;
     return 0;
@@ -165,8 +165,7 @@ int CHttpConn::_HandleDealsharefileRequest(string &url, string &post_data) {
     int ret = ApiDealsharefile(url, post_data, str_json);
     char *szContent = new char[HTTP_RESPONSE_JSON_MAX];
     uint32_t ulen = str_json.length();
-    snprintf(szContent, HTTP_RESPONSE_JSON_MAX, HTTP_RESPONSE_JSON, ulen,
-             str_json.c_str());
+    snprintf(szContent, HTTP_RESPONSE_JSON_MAX, HTTP_RESPONSE_JSON, ulen, str_json.c_str());
     tcp_conn_->send(szContent);
     delete[] szContent;
     return 0;
@@ -178,8 +177,7 @@ int CHttpConn::_HandleMd5Request(string &url, string &post_data) {
     int ret = ApiMd5(url, post_data, str_json);
     char *szContent = new char[HTTP_RESPONSE_JSON_MAX]; // 注意buffer的长度
     uint32_t ulen = str_json.length();
-    snprintf(szContent, HTTP_RESPONSE_JSON_MAX, HTTP_RESPONSE_JSON, ulen,
-             str_json.c_str());
+    snprintf(szContent, HTTP_RESPONSE_JSON_MAX, HTTP_RESPONSE_JSON, ulen, str_json.c_str());
     tcp_conn_->send(szContent);
     delete[] szContent;
     return 0;
@@ -199,8 +197,7 @@ int CHttpConn::_HandleMyfilesRequest(string &url, string &post_data) {
     int ret = ApiMyfiles(url, post_data, str_json);
     char *szContent = new char[HTTP_RESPONSE_JSON_MAX]; // 注意buffer的长度
     uint32_t ulen = str_json.length();
-    snprintf(szContent, HTTP_RESPONSE_JSON_MAX, HTTP_RESPONSE_JSON, ulen,
-             str_json.c_str());
+    snprintf(szContent, HTTP_RESPONSE_JSON_MAX, HTTP_RESPONSE_JSON, ulen, str_json.c_str());
     tcp_conn_->send(szContent);
     delete[] szContent;
     return 0;
@@ -213,8 +210,7 @@ int CHttpConn::_HandleSharefilesRequest(string &url, string &post_data) {
     int ret = ApiSharefiles(url, post_data, str_json);
     char *szContent = new char[HTTP_RESPONSE_JSON_MAX];
     uint32_t ulen = str_json.length();
-    snprintf(szContent, HTTP_RESPONSE_JSON_MAX, HTTP_RESPONSE_JSON, ulen,
-             str_json.c_str());
+    snprintf(szContent, HTTP_RESPONSE_JSON_MAX, HTTP_RESPONSE_JSON, ulen, str_json.c_str());
     tcp_conn_->send(szContent);
     delete[] szContent;
     return 0;
@@ -225,8 +221,7 @@ int CHttpConn::_HandleSharepictureRequest(string &url, string &post_data) {
     int ret = ApiSharepicture(url, post_data, str_json);
     char *szContent = new char[HTTP_RESPONSE_JSON_MAX];
     uint32_t ulen = str_json.length();
-    snprintf(szContent, HTTP_RESPONSE_JSON_MAX, HTTP_RESPONSE_JSON, ulen,
-             str_json.c_str());
+    snprintf(szContent, HTTP_RESPONSE_JSON_MAX, HTTP_RESPONSE_JSON, ulen, str_json.c_str());
     tcp_conn_->send(szContent);
     delete[] szContent;
     return 0;
@@ -241,9 +236,30 @@ int CHttpConn::_HandleHtml(string &url, string &post_data) {
 
     char *szContent = new char[HTTP_RESPONSE_JSON_MAX];
     uint32_t ulen = buffer.str().size();
-    snprintf(szContent, HTTP_RESPONSE_JSON_MAX, HTTP_RESPONSE_HTML, ulen,
-             buffer.str().c_str());
+    snprintf(szContent, HTTP_RESPONSE_JSON_MAX, HTTP_RESPONSE_HTML, ulen, buffer.str().c_str());
 
+    tcp_conn_->send(szContent);
+    delete[] szContent;
+    return 0;
+}
+
+int CHttpConn::_HandleGetShare(std::unordered_map<string, string>& params) {
+    char *szContent = new char[HTTP_RESPONSE_JSON_MAX];
+    std::string urlmd5 = "";
+    std::string strJson = "";
+    uint32_t ulen = 0;
+    auto item = params.find("urlmd5");
+    if(item != params.end()) {
+        urlmd5 = item->second;
+    } else {
+        snprintf(szContent, HTTP_RESPONSE_JSON_MAX, HTTP_RESPONSE_HTML, 11, "bad request");
+        goto error;
+    }
+
+    ApiSharep(urlmd5, strJson);
+    ulen = strJson.length();
+    snprintf(szContent, HTTP_RESPONSE_JSON_MAX, HTTP_RESPONSE_JSON, ulen, strJson.c_str());
+error:
     tcp_conn_->send(szContent);
     delete[] szContent;
     return 0;

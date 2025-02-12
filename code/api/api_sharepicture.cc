@@ -466,8 +466,7 @@ int handleSharePicture(const char *user, const char *filemd5,
     time_t now;
     //获取当前时间
     now = time(NULL);
-    strftime(create_time, TIME_STRING_LEN - 1, "%Y-%m-%d %H:%M:%S",
-             localtime(&now));
+    strftime(create_time, TIME_STRING_LEN - 1, "%Y-%m-%d %H:%M:%S",localtime(&now));
 
     // 3. 插入share_picture_list
     //图床分享图片的信息，额外保存在share_picture_list保存列表
