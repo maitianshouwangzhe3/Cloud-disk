@@ -378,8 +378,7 @@ int ApiSharefiles(string &url, string &post_data, string &str_json) {
         if (strcmp(cmd, "normal") == 0) {
             handleGetShareFilelist(start, count, str_json); // 获取共享文件
         } else if (strcmp(cmd, "pvdesc") == 0) {
-            handleGetRankingFilelist(start, count,
-                                     str_json); ////获取共享文件排行版
+            handleGetRankingFilelist(start, count, str_json); ////获取共享文件排行版
         } else {
             encodeSharefilesJson(1, 0, str_json);
         }

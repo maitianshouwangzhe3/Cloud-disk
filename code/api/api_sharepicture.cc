@@ -6,8 +6,10 @@
 #include "rapidjson/writer.h"
 #include "rapidjson/stringbuffer.h"
 #include "api_common.h"
+#include "log.h"
 #include <sys/time.h>
 #include <time.h>
+#include <unordered_map>
 //解析的json包
 int decodeSharePictureJson(string &str_json, string &user_name, string &token, string &md5, string &filename) {
     rapidjson::Document root;
@@ -193,8 +195,7 @@ int getSharePicturesCount(CDBConn *db_conn, CacheConn *cache_conn, string &user_
 
 //获取共享文件列表
 //获取用户文件信息 127.0.0.1:80/sharepicture&cmd=normal
-void handleGetSharePicturesList(const char *user, int start, int count,
-                                string &str_json) {
+void handleGetSharePicturesList(const char *user, int start, int count, string &str_json) {
     int ret = 0;
     char sql_cmd[SQL_MAX_LEN] = {0};
     CResultSet *result_set = NULL;
@@ -214,12 +215,13 @@ void handleGetSharePicturesList(const char *user, int start, int count,
     string temp_user = user;
     ret = getSharePicturesCount(db_conn, cache_conn, temp_user, total);
     if (ret < 0) {
-        //LOG_ERROR << "getSharePicturesCount failed";
+        LOG_ERROR("getSharePicturesCount failed");
         ret = -1;
         goto END;
     }
+
     if (total == 0) {
-        //LOG_INFO << "getSharePicturesCount count = 0";
+        LOG_INFO("getSharePicturesCount count = 0");
         ret = 0;
         goto END;
     }
@@ -281,8 +283,7 @@ END:
 }
 
 //取消分享文件
-void handleCancelSharePicture(const char *user, const char *urlmd5,
-                              string &str_json) {
+void handleCancelSharePicture(const char *user, const char *urlmd5, string &str_json) {
     int ret = 0;
     char sql_cmd[SQL_MAX_LEN] = {0};
     int line = 0;
@@ -306,7 +307,7 @@ void handleCancelSharePicture(const char *user, const char *urlmd5,
 
     result_set = db_conn->ExecuteQuery(sql_cmd);
     if (!result_set) {
-        //LOG_ERROR << sql_cmd << " 操作失败";
+        LOG_ERROR("{} 操作失败", sql_cmd);
         ret = -1;
         goto END;
     }
@@ -315,7 +316,7 @@ void handleCancelSharePicture(const char *user, const char *urlmd5,
     line = db_conn->GetRowNum();
     
     if (line == 0) {
-        //LOG_ERROR << "没有记录";
+        LOG_ERROR("没有记录");
         ret = 0;
         goto END;
     }
@@ -353,7 +354,7 @@ void handleCancelSharePicture(const char *user, const char *urlmd5,
     } else {
         if (result_set)
             delete result_set;
-        //LOG_ERROR << sql_cmd << " 操作失败";
+        LOG_ERROR("{} 操作失败", sql_cmd);
         ret = -1;
         // db_conn->Rollback();
         goto END;
@@ -364,7 +365,7 @@ void handleCancelSharePicture(const char *user, const char *urlmd5,
         sprintf(sql_cmd, "update file_info set count=%d where md5 = '%s'",
                 count, filemd5.c_str());
         if (!db_conn->ExecuteUpdate(sql_cmd)) {
-            //LOG_ERROR << sql_cmd << " 操作失败";
+            LOG_ERROR("{} 操作失败", sql_cmd);
             ret = -1;
             // db_conn->Rollback();
             goto END;
@@ -378,7 +379,7 @@ void handleCancelSharePicture(const char *user, const char *urlmd5,
         user, urlmd5);
 
     if (!db_conn->ExecutePassQuery(sql_cmd)) {
-        //LOG_ERROR << sql_cmd << " 操作失败";
+        LOG_ERROR("{} 操作失败", sql_cmd);
         ret = -1;
         // db_conn->Rollback();
         goto END;
@@ -394,7 +395,7 @@ void handleCancelSharePicture(const char *user, const char *urlmd5,
                 filemd5.c_str());
 
         if (!db_conn->ExecuteDrop(sql_cmd)) {
-            //LOG_WARN << sql_cmd << " 操作失败";
+            LOG_WARN("{} 操作失败", sql_cmd);
             ret = -1;
             goto END;
         }
@@ -402,7 +403,7 @@ void handleCancelSharePicture(const char *user, const char *urlmd5,
         //从storage服务器删除此文件，参数为为文件id
         ret2 = RemoveFileFromFastDfs(fileid.c_str());
         if (ret2 != 0) {
-            //LOG_ERROR << "RemoveFileFromFastDfs err: " <<  ret2;
+            LOG_ERROR("RemoveFileFromFastDfs err: {}", ret2);
             ret = -1;
             goto END;
         }
@@ -412,7 +413,7 @@ void handleCancelSharePicture(const char *user, const char *urlmd5,
 
     // 共享图片数量-1
     if (CacheDecrCount(cache_conn, SHARE_PIC_COUNT + string(user)) < 0) {
-        //LOG_ERROR << "CacheDecrCount failed"; // 即使失败 也可以下次从mysql加载计数
+        LOG_ERROR("CacheDecrCount failed");
     }
 
     ret = 0;
@@ -431,8 +432,7 @@ END:
 }
 
 //分享图片
-int handleSharePicture(const char *user, const char *filemd5,
-                       const char *file_name, string &str_json) {
+int handleSharePicture(const char *user, const char *filemd5, const char *file_name, string &str_json) {
     char key[5] = {0};
     int count = 0;
     // 获取数据库连接
@@ -442,6 +442,7 @@ int handleSharePicture(const char *user, const char *filemd5,
     CacheManager *cache_manager = CacheManager::getInstance();
     CacheConn *cache_conn = cache_manager->GetCacheConn("token");
     AUTO_REL_CACHECONN(cache_manager, cache_conn);
+    std::unordered_map<string, string> shareMap;
     /*
     1. 图床分享：
     （1）图床分享数据库，user file_name filemd5 urlmd5  pv浏览次数 create_time
@@ -485,7 +486,7 @@ int handleSharePicture(const char *user, const char *filemd5,
             user, filemd5, file_name, urlmd5.c_str(), key, 0, create_time);
 
     if (!db_conn->ExecuteCreate(sql_cmd)) {
-        //LOG_ERROR << sql_cmd << " 操作失败";
+        LOG_ERROR("{} 操作失败", sql_cmd);
         ret = -1;
         goto END;
     }
@@ -496,7 +497,7 @@ int handleSharePicture(const char *user, const char *filemd5,
     count = 0;
     ret = GetResultOneCount(db_conn, sql_cmd, count); //执行sql语句
     if (ret != 0) {
-        //LOG_ERROR << sql_cmd << " 操作失败";
+        LOG_ERROR("{} 操作失败", sql_cmd);
         ret = -1;
         goto END;
     }
@@ -504,14 +505,24 @@ int handleSharePicture(const char *user, const char *filemd5,
     sprintf(sql_cmd, "update file_info set count = %d where md5 = '%s'",
             count + 1, filemd5);
     if (!db_conn->ExecuteUpdate(sql_cmd)) {
-        //LOG_ERROR << sql_cmd << " 操作失败";
+        LOG_ERROR("{} 操作失败", sql_cmd);
         ret = -1;
         goto END;
     }
 
     // 4 增加分享图片计数  SHARE_PIC_COUNTdarren
     if (CacheIncrCount(cache_conn, SHARE_PIC_COUNT + string(user)) < 0) {
-        //LOG_ERROR << " CacheIncrCount 操作失败";
+        LOG_ERROR("CacheIncrCount 操作失败");
+    }
+
+    shareMap["urlmd5"] = urlmd5;
+    shareMap["user"] = user;
+    shareMap["create_time"] = create_time;
+    shareMap["pv"] = "0";
+    shareMap["key"] = key;
+    shareMap["file_name"] = file_name;
+    if(!CacheHmset(cache_conn, urlmd5, shareMap)) {
+        LOG_ERROR("CacheHmset 操作失败");
     }
 
     ret = 0;
@@ -567,8 +578,7 @@ int handleBrowsePicture(const char *urlmd5, string &str_json) {
     }
 
     // 2. 通过文件的MD5查找对应的url地址
-    sprintf(sql_cmd, "select url from file_info where md5 ='%s'",
-            filemd5.c_str());
+    sprintf(sql_cmd, "select url from file_info where md5 ='%s'", filemd5.c_str());
     result_set = db_conn->ExecuteQuery(sql_cmd);
     if (result_set && result_set->Next()) {
         picture_url = result_set->GetString("url");
@@ -582,12 +592,10 @@ int handleBrowsePicture(const char *urlmd5, string &str_json) {
 
     // 3. 更新浏览次数， 可以考虑保存到redis，减少数据库查询的压力
     pv += 1; //浏览计数增加
-    sprintf(sql_cmd,
-            "update share_picture_list set pv = %d where urlmd5 = '%s'", pv,
-            urlmd5);
+    sprintf(sql_cmd, "update share_picture_list set pv = %d where urlmd5 = '%s'", pv, urlmd5);
 
     if (!db_conn->ExecuteUpdate(sql_cmd)) {
-        //LOG_ERROR << sql_cmd << " 操作失败";
+        LOG_ERROR("{} 操作失败", sql_cmd);
         ret = -1;
         goto END;
     }
@@ -618,11 +626,9 @@ int ApiSharepicture(string &url, string &post_data, string &str_json) {
 
     if (strcmp(cmd, "share") == 0) //分享文件
     {
-        ret = decodeSharePictureJson(post_data, user_name, token, md5,
-                                     filename); //解析json信息
+        ret = decodeSharePictureJson(post_data, user_name, token, md5, filename); //解析json信息
         if (ret == 0) {
-            handleSharePicture(user_name.c_str(), md5.c_str(), filename.c_str(),
-                               str_json);
+            handleSharePicture(user_name.c_str(), md5.c_str(), filename.c_str(), str_json);
         } else {
             // 回复请求格式错误
             encodeSharePictureJson(HTTP_RESP_FAIL, urlmd5, str_json);
@@ -633,8 +639,7 @@ int ApiSharepicture(string &url, string &post_data, string &str_json) {
         int count = 0;
         ret = decodePictureListJson(post_data, user_name, token, start, count);
         if (ret == 0) {
-            handleGetSharePicturesList(user_name.c_str(), start, count,
-                                       str_json);
+            handleGetSharePicturesList(user_name.c_str(), start, count, str_json);
         } else {
             // 回复请求格式错误
             encodeSharePictureJson(HTTP_RESP_FAIL, urlmd5, str_json);
@@ -643,8 +648,7 @@ int ApiSharepicture(string &url, string &post_data, string &str_json) {
     {
         ret = decodeCancelPictureJson(post_data, user_name, urlmd5);
         if (ret == 0) {
-            handleCancelSharePicture(user_name.c_str(), urlmd5.c_str(),
-                                     str_json);
+            handleCancelSharePicture(user_name.c_str(), urlmd5.c_str(), str_json);
         } else {
             // 回复请求格式错误
             encodeCancelPictureJson(1, str_json);

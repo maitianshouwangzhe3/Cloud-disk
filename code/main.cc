@@ -33,8 +33,6 @@ public:
         ,num_threads_(num_threads)
         ,tcp_no_delay_(nodelay)
     {
-        //LOG_INFO << "Use " << num_event_loops << " IO threads,  " << num_threads <<  " work Threds.";
-        //LOG_INFO << "TCP no delay " << nodelay;
         LOG_INFO("Use {} IO threads,  {} work Threds.", num_event_loops, num_threads);
         LOG_INFO("TCP no delay {}", nodelay);
 
@@ -62,12 +60,10 @@ private:
         {
             if(tcp_no_delay_)      
                 conn->setTcpNoDelay(true);
-            //LOG_INFO << "Connection UP :" << conn->peerAddress().toIpPort();
-            LOG_INFO("Connection UP : {}", conn->peerAddress().toIpPort().c_str());
+            LOG_INFO("Connection UP : {}", conn->peerAddress().toIpPort());
             
             uint32_t uuid = conn_uuid_generator_++;
-            //LOG_INFO << "Connection UP: " << conn.get() << ", uuid: " <<  uuid;
-            LOG_INFO("Connection UP: {}, uuid: {}", conn.get()->getTcpInfoString().c_str(), uuid);
+            LOG_INFO("Connection UP: {}, uuid: {}", conn.get()->getTcpInfoString(), uuid);
             conn->setContext(uuid);
             // 新建一个CHttpConn，然后绑定 tcp TcpConnectionPtr
             CHttpConnPtr http_conn =  std::make_shared<CHttpConn>(conn);
@@ -79,8 +75,7 @@ private:
         else
         {
             uint32_t uuid = boost::any_cast<uint32_t>( conn->getContext());
-            //LOG_INFO << "Connection DOWN : " << conn.get()<< ", uuid: " << uuid;
-            LOG_INFO("Connection DOWN : {}, uuid: {}", conn.get()->getTcpInfoString().c_str(), uuid);
+            LOG_INFO("Connection DOWN : {}, uuid: {}", conn.get()->getTcpInfoString(), uuid);
             std::lock_guard<std::mutex> ulock(mtx_); //自动释放
             CHttpConnPtr &http_conn = s_http_map[uuid];
             if(http_conn) {
@@ -94,8 +89,7 @@ private:
     void onMessage(const TcpConnectionPtr &conn, Buffer *buf, Timestamp time)
     {
         uint32_t uuid = boost::any_cast<uint32_t>(conn->getContext());
-        //LOG_INFO << "TCP Conn: " << conn.get() << ", uuid: " << uuid << " have msg";
-        LOG_INFO("TCP Conn: {}, uuid: {}, have msg", conn.get()->getTcpInfoString().c_str(), uuid);
+        LOG_INFO("TCP Conn: {}, uuid: {}, have msg", conn.get()->getTcpInfoString(), uuid);
         //然后管理tcp长连接？
         // std::string msg = buf->retrieveAllAsString();  //这里
    
@@ -107,8 +101,7 @@ private:
             // http_conn->OnRead(buf);  // 直接在io线程处理
             thread_pool_.run(std::bind(&CHttpConn::OnRead, http_conn, buf)); //给到业务线程处理
         } else {
-            //LOG_ERROR << "TCP Conn: " << conn.get() << ", uuid: " << uuid << " have broken";
-            LOG_ERROR("TCP Conn: {}, uuid: {}, have broken", conn.get()->getTcpInfoString().c_str(), uuid);
+            LOG_ERROR("TCP Conn: {}, uuid: {}, have broken", conn.get()->getTcpInfoString(), uuid);
             conn->shutdown();   // 
         }
     }
@@ -116,8 +109,7 @@ private:
     void onWriteComplete(const TcpConnectionPtr& conn) //这个函数不是用来关闭的
     {
         uint32_t uuid =  boost::any_cast<uint32_t>(conn->getContext());
-        //LOG_INFO << "TCP Conn: " << conn.get() << ", uuid: " << uuid << " have WriteComplete";  //发送完毕先在这里有反馈
-        LOG_INFO("TCP Conn: {}, uuid: {}, have WriteComplete", conn.get()->getTcpInfoString().c_str(), uuid);
+        LOG_INFO("TCP Conn: {}, uuid: {}, have WriteComplete", conn.get()->getTcpInfoString(), uuid);
     }
 
     EventLoop *loop_;
@@ -131,12 +123,7 @@ private:
 };
 
 int main(int argc, char *argv[]) {
-
-    
-    std::cout  << argv[1] << "[conf ] "<< std::endl;
-     
-
-     // 默认情况下，往一个读端关闭的管道或socket连接中写数据将引发SIGPIPE信号。我们需要在代码中捕获并处理该信号，
+    // 默认情况下，往一个读端关闭的管道或socket连接中写数据将引发SIGPIPE信号。我们需要在代码中捕获并处理该信号，
     // 或者至少忽略它，因为程序接收到SIGPIPE信号的默认行为是结束进程，而我们绝对不希望因为错误的写操作而导致程序退出。
     // SIG_IGN 忽略信号的处理程序
     signal(SIGPIPE, SIG_IGN); //忽略SIGPIPE信号
@@ -148,9 +135,6 @@ int main(int argc, char *argv[]) {
         str_tc_http_server_conf = (char *)"tc_http_server.conf";
     }
     
-    
- 
-    std::cout << "conf file path: " <<  str_tc_http_server_conf << std::endl;
      // 读取配置文件
     CConfigFileReader config_file(str_tc_http_server_conf);     //读取配置文件
 
@@ -187,16 +171,14 @@ int main(int argc, char *argv[]) {
     CacheManager::SetConfPath(str_tc_http_server_conf); //设置配置文件路径
     CacheManager *cache_manager = CacheManager::getInstance();
     if (!cache_manager) {
-        //LOG_ERROR <<"CacheManager init failed";
-        LOG_ERROR("CacheManager init failed {}", str_tc_http_server_conf);
+        LOG_ERROR("CacheManager init failed");
         return -1;
     }
 
     CDBManager::SetConfPath(str_tc_http_server_conf);   //设置配置文件路径
     CDBManager *db_manager = CDBManager::getInstance();
     if (!db_manager) {
-        //LOG_ERROR <<"DBManager init failed";
-        LOG_ERROR("DBManager init failed {}", str_tc_http_server_conf);
+        LOG_ERROR("DBManager init failed");
         return -1;
     }
 
@@ -211,8 +193,7 @@ int main(int argc, char *argv[]) {
     ret = ApiDealfileInit(dfs_path_client);
 
     if (ApiInit() < 0) {
-        //LOG_ERROR << "ApiInit failed";
-        LOG_ERROR("ApiInit failed {}", "ApiInit failed");
+        LOG_ERROR("ApiInit failed");
         return -1;
     }
 

@@ -198,8 +198,7 @@ string CacheConn::SetEx(string key, int timeout, string value) {
     return ret_value;
 }
 
-bool CacheConn::MGet(const vector<string> &keys,
-                     map<string, string> &ret_value) {
+bool CacheConn::MGet(const vector<string> &keys, unordered_map<string, string> &ret_value) {
     if (Init()) {
         return false;
     }
@@ -349,13 +348,12 @@ END:
 
     return retn;
 }
-bool CacheConn::HgetAll(string key, map<string, string> &ret_value) {
+bool CacheConn::HgetAll(string key, unordered_map<string, string> &ret_value) {
     if (Init()) {
         return false;
     }
 
-    redisReply *reply =
-        (redisReply *)redisCommand(context_, "HGETALL %s", key.c_str());
+    redisReply *reply = (redisReply *)redisCommand(context_, "HGETALL %s", key.c_str());
     if (!reply) {
         log_error("redisCommand failed:%s\n", context_->errstr);
         redisFree(context_);
@@ -434,7 +432,7 @@ long CacheConn::IncrBy(string key, long value) {
     return ret_value;
 }
 
-string CacheConn::Hmset(string key, map<string, string> &hash) {
+string CacheConn::Hmset(string key, unordered_map<string, string> &hash) {
     string ret_value;
 
     if (Init()) {
@@ -450,7 +448,7 @@ string CacheConn::Hmset(string key, map<string, string> &hash) {
     argv[0] = "HMSET";
     argv[1] = key.c_str();
     int i = 2;
-    for (map<string, string>::iterator it = hash.begin(); it != hash.end();
+    for (unordered_map<string, string>::iterator it = hash.begin(); it != hash.end();
          it++) {
         argv[i++] = it->first.c_str();
         argv[i++] = it->second.c_str();
@@ -1058,7 +1056,7 @@ int CacheManager::Init() {
 }
 
 CacheConn *CacheManager::GetCacheConn(const char *pool_name) {
-    map<string, CachePool *>::iterator it = m_cache_pool_map.find(pool_name);
+    unordered_map<string, CachePool *>::iterator it = m_cache_pool_map.find(pool_name);
     if (it != m_cache_pool_map.end()) {
         return it->second->GetCacheConn();
     } else {
@@ -1071,8 +1069,7 @@ void CacheManager::RelCacheConn(CacheConn *cache_conn) {
         return;
     }
 
-    map<string, CachePool *>::iterator it =
-        m_cache_pool_map.find(cache_conn->GetPoolName());
+    unordered_map<string, CachePool *>::iterator it = m_cache_pool_map.find(cache_conn->GetPoolName());
     if (it != m_cache_pool_map.end()) {
         return it->second->RelCacheConn(cache_conn);
     }

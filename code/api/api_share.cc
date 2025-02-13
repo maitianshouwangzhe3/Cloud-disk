@@ -41,30 +41,47 @@ int ApiSharep(std::string& urlMd5, std::string& strJson) {
     CDBManager *db_manager = CDBManager::getInstance();
     CDBConn *db_conn = db_manager->GetDBConn("tuchuang_slave");
     AUTO_REL_DBCONN(db_manager, db_conn);
-    // CacheManager *cache_manager = CacheManager::getInstance();
-    // CacheConn *cache_conn = cache_manager->GetCacheConn("token");
-    // AUTO_REL_CACHECONN(cache_manager, cache_conn);
+    CacheManager *cache_manager = CacheManager::getInstance();
+    CacheConn *cache_conn = cache_manager->GetCacheConn("token");
+    AUTO_REL_CACHECONN(cache_manager, cache_conn);
     string Url = "";
     int pv = 0;
     string user = "";
     string time = "";
 
-    std::string strSql = formatString("select a.url, b.`user`, b.pv, b.create_time from file_info as a join "\
-    "(select filemd5, `user`, pv, create_time from share_picture_list where urlmd5='%s' limit 1) as b on b.filemd5 = a.md5;", urlMd5.c_str());
-    CResultSet *result_set = db_conn->ExecuteQuery(strSql.c_str());
-    if (result_set && result_set->Next()) {
-        // 存在在返回
-        Url = result_set->GetString("url");
-        pv = result_set->GetInt("pv");
-        user = result_set->GetString("user");
-        time = result_set->GetString("create_time");
+    std::unordered_map<std::string, std::string> ResultMap;
+    if(cache_conn->HgetAll(urlMd5, ResultMap) && !ResultMap.empty()) {
+        Url = ResultMap["url"];
+        pv = atoi(ResultMap["pv"].c_str());
+        user = ResultMap["user"];
+        time = ResultMap["create_time"];
         if(Url.empty()) {
             encodeSharePictureJson(HTTP_RESP_FAIL, pv, Url, user, time, strJson);
         } else {
             encodeSharePictureJson(HTTP_RESP_OK, pv, Url, user, time, strJson);
         }
     } else {
-        encodeSharePictureJson(HTTP_RESP_FAIL, pv, Url, user, time, strJson);
+        std::string strSql = formatString("select a.url, b.`user`, b.pv, b.create_time from file_info as a join share_picture_list  as b on b.filemd5 = a.md5 where b.urlmd5 = '%s';", urlMd5.c_str());
+        CResultSet *result_set = db_conn->ExecuteQuery(strSql.c_str());
+        if (result_set && result_set->Next()) {
+            // 存在在返回
+            Url = result_set->GetString("url");
+            pv = result_set->GetInt("pv");
+            user = result_set->GetString("user");
+            time = result_set->GetString("create_time");
+            if(Url.empty()) {
+                encodeSharePictureJson(HTTP_RESP_FAIL, pv, Url, user, time, strJson);
+            } else {
+                ResultMap["url"] = Url;
+                ResultMap["pv"] = std::to_string(pv);
+                ResultMap["user"] = user;
+                ResultMap["create_time"] = time;
+                cache_conn->Hmset(urlMd5, ResultMap);
+                encodeSharePictureJson(HTTP_RESP_OK, pv, Url, user, time, strJson);
+            }
+        } else {
+            encodeSharePictureJson(HTTP_RESP_FAIL, pv, Url, user, time, strJson);
+        }
     }
 
     return 0;

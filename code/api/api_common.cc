@@ -79,6 +79,11 @@ int CacheIncrCount(CacheConn *cache_conn, string key) {
     
     return 0;
 }
+
+int CacheHmset(CacheConn *cache_conn, string key, unordered_map<string, string> &hash) {
+    (void)cache_conn->Hmset(key, hash);
+    return 0;
+}
 // 这里最小我们只允许为0
 int CacheDecrCount(CacheConn *cache_conn, string key) {
     int64_t count = 0;
@@ -104,9 +109,7 @@ int DBGetUserFilesCountByUsername(CDBConn *db_conn, string user_name,
     // 先查看用户是否存在
     string str_sql;
 
-    str_sql =
-        FormatString("select count(*) from user_file_list where user='%s'",
-                     user_name.c_str());
+    str_sql = FormatString("select count(*) from user_file_list where user='%s'", user_name.c_str());
 
     CResultSet *result_set = db_conn->ExecuteQuery(str_sql.c_str());
     if (result_set && result_set->Next()) {

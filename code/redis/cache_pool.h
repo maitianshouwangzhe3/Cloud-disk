@@ -12,13 +12,13 @@
 #include <condition_variable>
 #include <iostream>
 #include <list>
-#include <map>
+#include <unordered_map>
 #include <mutex>
 #include <vector>
 #include <hiredis/hiredis.h>
 
 using std::list;
-using std::map;
+using std::unordered_map;
 using std::string;
 using std::vector;
 
@@ -57,7 +57,7 @@ class CacheConn {
 
     // string mset(string key, map);
     //批量获取
-    bool MGet(const vector<string> &keys, map<string, string> &ret_value);
+    bool MGet(const vector<string> &keys, unordered_map<string, string> &ret_value);
     //原子加减1
     int Incr(string key, int64_t &value);
     int Decr(string key, int64_t &value);
@@ -66,12 +66,12 @@ class CacheConn {
     long Hdel(string key, string field);
     string Hget(string key, string field);
     int Hget(string key, char *field, char *value);
-    bool HgetAll(string key, map<string, string> &ret_value);
+    bool HgetAll(string key, unordered_map<string, string> &ret_value);
     long Hset(string key, string field, string value);
 
     long HincrBy(string key, string field, long value);
     long IncrBy(string key, long value);
-    string Hmset(string key, map<string, string> &hash);
+    string Hmset(string key, unordered_map<string, string> &hash);
     bool Hmget(string key, list<string> &fields, list<string> &ret_value);
 
     // ------------ 链表相关 ------------
@@ -155,7 +155,7 @@ class CacheManager {
 
   private:
     static CacheManager *s_cache_manager;
-    map<string, CachePool *> m_cache_pool_map;
+    unordered_map<string, CachePool *> m_cache_pool_map;
     static std::string conf_path_;
 };
 

@@ -8,7 +8,6 @@
 #include "http_conn.h"
 
 #include "muduo/net/TcpConnection.h"
-//#include "muduo/base/Logging.h"
 #include "muduo/base/Timestamp.h"
 #include "api_dealfile.h"
 #include "api_deal_sharefile.h"
@@ -64,6 +63,8 @@ void CHttpConn::OnRead(Buffer *buf) // CHttpConn业务层面的OnRead
             _HandleDealsharefileRequest(url, content);
         } else if (strncmp(url.c_str(), "/api/sharepic", 13) == 0) { //
             _HandleSharepictureRequest(url, content);                // 处理
+        } else if (strncmp(url.c_str(), "/api/sharefile", 14) == 0) { //
+            //_HandleSharepictureRequest(url, content);                          // 处理共享文件
         } else if (strncmp(url.c_str(), "/api/md5", 8) == 0) {       //
             _HandleMd5Request(url, content);                         // 处理
         } else if (strncmp(url.c_str(), "/api/upload", 11) == 0) {   // 上传
@@ -72,8 +73,7 @@ void CHttpConn::OnRead(Buffer *buf) // CHttpConn业务层面的OnRead
             _HandleHtml(url, content);
         } else if (strncmp(url.c_str(), "/api/share", 10) == 0) {   //  GET sharefile
             _HandleGetShare(http_parser_.GetParams());
-        }
-        else {
+        } else {
             char *szContent = new char[HTTP_RESPONSE_JSON_MAX];
             LOG_ERROR("url unknown, url= {}", url.c_str());
 
@@ -121,8 +121,6 @@ int CHttpConn::_HandleRegisterRequest(string &url, string &post_data) {
 	snprintf(http_body, HTTP_RESPONSE_JSON_MAX, HTTP_RESPONSE_JSON, ulen, resp_json.c_str()); 	
     tcp_conn_->send(http_body);
     delete[] http_body;
-    // LOG_INFO << "tcp_conn_->send  "; 
-    //LOG_INFO << "uuid: "<< uuid_ << " http send: " <<  Timestamp::getMicroseconds() - init_time_;
     return 0;
 }
 // 账号登陆处理 /api/login
