@@ -63,8 +63,6 @@ void CHttpConn::OnRead(Buffer *buf) // CHttpConn业务层面的OnRead
             _HandleDealsharefileRequest(url, content);
         } else if (strncmp(url.c_str(), "/api/sharepic", 13) == 0) { //
             _HandleSharepictureRequest(url, content);                // 处理
-        } else if (strncmp(url.c_str(), "/api/sharefile", 14) == 0) { //
-            //_HandleSharepictureRequest(url, content);                          // 处理共享文件
         } else if (strncmp(url.c_str(), "/api/md5", 8) == 0) {       //
             _HandleMd5Request(url, content);                         // 处理
         } else if (strncmp(url.c_str(), "/api/upload", 11) == 0) {   // 上传

@@ -239,9 +239,10 @@ void handleGetSharePicturesList(const char *user, int start, int count, string &
     if (result_set) {
         // 遍历所有的内容
         // 获取大小
-        rapidjson::Value files;
+        writer.Key("files");
+        writer.StartArray();
         while(result_set->Next()) {
-            writer.StartArray();
+            writer.StartObject();
             writer.Key("user");
             writer.String(result_set->GetString("user"));
             writer.Key("filemd5");
@@ -256,9 +257,9 @@ void handleGetSharePicturesList(const char *user, int start, int count, string &
             writer.String(result_set->GetString("create_time"));
             writer.Key("size");
             writer.Int(result_set->GetInt("size"));
-            writer.EndArray();
+            writer.EndObject();
         }
-
+        writer.EndArray();
         ret = 0;
         delete result_set;
     } else {
