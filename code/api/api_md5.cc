@@ -68,7 +68,7 @@ void handleDealMd5(const char *user, const char *md5, const char *filename,
     char sql_cmd[SQL_MAX_LEN] = {0};
 
     CDBManager *db_manager = CDBManager::getInstance();
-    CDBConn *db_conn = db_manager->GetDBConn("tuchuang_slave");
+    CDBConn *db_conn = db_manager->GetDBConn("cloud_disk_slave");
     AUTO_REL_DBCONN(db_manager, db_conn);
     CacheManager *cache_manager = CacheManager::getInstance();
     CacheConn *cache_conn = cache_manager->GetCacheConn("token");

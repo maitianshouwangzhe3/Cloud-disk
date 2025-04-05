@@ -143,39 +143,5 @@ int CHttpParserWrapper::OnBody(http_parser *parser, const char *at,
 int CHttpParserWrapper::OnMessageComplete(http_parser *parser, void *obj) {
     CHttpParserWrapper* pHttpParser = ((CHttpParserWrapper *)obj);
     pHttpParser->SetReadAll();
-    if(pHttpParser->GetMethod() == HTTP_GET) {
-        std::string strUrl = pHttpParser->GetUrlString();
-        size_t query_start = strUrl.find('?');
-        if (query_start != std::string::npos) {
-            pHttpParser->SetUrl(strUrl.substr(0, query_start));
-
-            do {
-                size_t end = strUrl.find('&', query_start + 1);
-                if(end == std::string::npos) {
-                    end = strUrl.length();
-                }   
-                
-                ++query_start;
-                size_t equal_sign = strUrl.find('=', query_start);
-                if(equal_sign != std::string::npos) {
-                    string key = strUrl.substr(query_start, equal_sign - query_start);
-                    string value = strUrl.substr(equal_sign + 1, end - equal_sign);
-                    if(!key.empty() && !value.empty()) { 
-                        pHttpParser->InsertParams(key, value);
-                    }
-                }
-
-                query_start = strUrl.find('&', end + 1);
-            } while(query_start != std::string::npos);
-        }
-    }
     return 0;
-}
-
-void CHttpParserWrapper::ClearParams() {
-    params_.clear();
-}
-
-void CHttpParserWrapper::InsertParams(string& key, string& value) {
-    params_.insert(std::pair<string, string>(key, value));
 }

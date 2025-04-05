@@ -74,7 +74,7 @@ std::string formatString1(const std::string &format, Args... args) {
 int verifyUserPassword(string &user_name, string &pwd) {
     int ret = 0;
     CDBManager *db_manager = CDBManager::getInstance();
-    CDBConn *db_conn = db_manager->GetDBConn("tuchuang_slave");
+    CDBConn *db_conn = db_manager->GetDBConn("cloud_disk_slave");
     AUTO_REL_DBCONN(db_manager, db_conn);
 
     // 先查看用户是否存在
@@ -135,7 +135,7 @@ int loadMyfilesCountAndSharepictureCount(string &user_name) {
     int64_t redis_file_count = 0;
     int mysq_file_count = 0;
     CDBManager *db_manager = CDBManager::getInstance();
-    CDBConn *db_conn = db_manager->GetDBConn("tuchuang_slave");
+    CDBConn *db_conn = db_manager->GetDBConn("cloud_disk_slave");
     AUTO_REL_DBCONN(db_manager, db_conn);
     CacheManager *cache_manager = CacheManager::getInstance();
     CacheConn *cache_conn = cache_manager->GetCacheConn("token");

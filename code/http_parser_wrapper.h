@@ -6,7 +6,6 @@
 #include "http_parser.h"
 #include "util.h"
 
-#include <unordered_map>
 
 // extract url and content body from an ajax request
 class CHttpParserWrapper {
@@ -44,7 +43,6 @@ class CHttpParserWrapper {
     char *GetContentType() { return (char *)content_type_.c_str(); }
     uint32_t GetContentLen() { return content_len_; }
     char *GetHost() { return (char *)host_.c_str(); }
-    unordered_map<string, string>& GetParams() {return params_;}
 
     void SetUrl(string url) { url_ = url; }
     void SetUrl(const char *url, size_t length) { url_.append(url, length); }
@@ -119,8 +117,6 @@ private:
     string content_type_;
     uint32_t content_len_;
     string host_;
-
-    unordered_map<string, string> params_;
 };
 
 #endif

@@ -76,7 +76,7 @@ int handleShareFile(string &user, string &md5, string &filename) {
     char fileid[1024] = {0};
     int ret2 = 0;
     CDBManager *db_manager = CDBManager::getInstance();
-    CDBConn *db_conn = db_manager->GetDBConn("tuchuang_slave");
+    CDBConn *db_conn = db_manager->GetDBConn("cloud_disk_slave");
     AUTO_REL_DBCONN(db_manager, db_conn);
 
     CacheManager *cache_manager = CacheManager::getInstance();
@@ -201,7 +201,7 @@ int handleDeleteFile(string &user, string &md5, string &filename) {
     int redis_has_record = 0; //标志redis是否有记录
 
     CDBManager *db_manager = CDBManager::getInstance();
-    CDBConn *db_conn = db_manager->GetDBConn("tuchuang_slave");
+    CDBConn *db_conn = db_manager->GetDBConn("cloud_disk_slave");
     AUTO_REL_DBCONN(db_manager, db_conn);
 
     CacheManager *cache_manager = CacheManager::getInstance();
@@ -357,7 +357,7 @@ int handlePvFile(string &user, string &md5, string &filename) {
     int pv = 0;
 
     CDBManager *db_manager = CDBManager::getInstance();
-    CDBConn *db_conn = db_manager->GetDBConn("tuchuang_slave");
+    CDBConn *db_conn = db_manager->GetDBConn("cloud_disk_slave");
     AUTO_REL_DBCONN(db_manager, db_conn);
 
     // sql语句

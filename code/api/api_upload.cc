@@ -1,3 +1,4 @@
+#include <cerrno>
 #include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -288,7 +289,7 @@ int ApiUpload(string &url, string &post_data, string &str_json) {
 
     // 获取数据库连接
     CDBManager *db_manager = CDBManager::getInstance();
-    CDBConn *db_conn = db_manager->GetDBConn("tuchuang_slave"); // 连接池可以配置多个 分库
+    CDBConn *db_conn = db_manager->GetDBConn("cloud_disk_slave"); // 连接池可以配置多个 分库
     AUTO_REL_DBCONN(db_manager, db_conn);
     CacheManager *cache_manager = CacheManager::getInstance();
     CacheConn *cache_conn = cache_manager->GetCacheConn("token");
@@ -396,6 +397,7 @@ int ApiUpload(string &url, string &post_data, string &str_json) {
     // 重命名 修改文件名  fastdfs 他需要带后缀的文件
     ret = rename(file_path, new_file_path); /// /root/tmp/1/0045118901 ->  /root/tmp/1/0045118901.txt
     if (ret < 0) {
+        printf("errno : %s\n", strerror(errno));
         ret = -1;
         goto END;
     }  

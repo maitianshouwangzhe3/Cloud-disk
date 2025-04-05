@@ -1,9 +1,11 @@
 #include "api_deal_sharefile.h"
+#include "log.h"
 #include "rapidjson/document.h"
 #include "rapidjson/writer.h"
 #include "rapidjson/stringbuffer.h"
 #include "api_common.h"
 #include "redis_keys.h"
+#include <cmath>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -56,7 +58,7 @@ int handlePvFile(string &md5, string &filename) {
     int pv = 0;
 
     CDBManager *db_manager = CDBManager::getInstance();
-    CDBConn *db_conn = db_manager->GetDBConn("tuchuang_slave");
+    CDBConn *db_conn = db_manager->GetDBConn("cloud_disk_slave");
     AUTO_REL_DBCONN(db_manager, db_conn);
     CacheManager *cache_manager = CacheManager::getInstance();
     CacheConn *cache_conn = cache_manager->GetCacheConn("token");
@@ -94,23 +96,27 @@ int handlePvFile(string &md5, string &filename) {
     ret2 = cache_conn->ZsetExit(FILE_PUBLIC_ZSET, fileid);
     if (ret2 == 1) //存在
     {              //===3、如果存在，有序集合score+1
-        ret = cache_conn->ZsetIncr(
-            FILE_PUBLIC_ZSET,
-            fileid); // zrange FILE_PUBLIC_ZSET  0 -1 withscores 查看
+        ret = cache_conn->ZsetIncr(FILE_PUBLIC_ZSET, fileid); // zrange FILE_PUBLIC_ZSET  0 -1 withscores 查看
         if (ret != 0) {
-
+            LOG_ERROR("zsetincr error");
         }
     } else if (ret2 == 0) //不存在
     {                     //===4、如果不存在，从mysql导入数据
         //===5、redis集合中增加一个元素(redis操作)
-        cache_conn->ZsetAdd(FILE_PUBLIC_ZSET, pv + 1, fileid);
+        ret = cache_conn->ZsetAdd(FILE_PUBLIC_ZSET, pv + 1, fileid);
+        if(ret != 0) {
+            LOG_ERROR("zsetadd error");
+        }
 
         //===6、redis对应的hash也需要变化 (redis操作)
         //     fileid ------>  filename
         cache_conn->Hset(FILE_NAME_HASH, fileid, filename);
-    } else //出错
-    {
+        if(ret!= 0) {
+            LOG_ERROR("hset error");
+        }
+    } else {//出错
         ret = -1;
+        LOG_ERROR("ZsetExit error");
         goto END;
     }
 
@@ -136,7 +142,7 @@ int handleCancelShareFile(string &user_name, string &md5, string &filename) {
     int ret2;
 
     CDBManager *db_manager = CDBManager::getInstance();
-    CDBConn *db_conn = db_manager->GetDBConn("tuchuang_slave");
+    CDBConn *db_conn = db_manager->GetDBConn("cloud_disk_slave");
     AUTO_REL_DBCONN(db_manager, db_conn);
     CacheManager *cache_manager = CacheManager::getInstance();
     CacheConn *cache_conn = cache_manager->GetCacheConn("token");
@@ -212,7 +218,7 @@ int handleSaveFile(string &user_name, string &md5, string &filename) {
     char time_str[128];
     int count;
     CDBManager *db_manager = CDBManager::getInstance();
-    CDBConn *db_conn = db_manager->GetDBConn("tuchuang_slave");
+    CDBConn *db_conn = db_manager->GetDBConn("cloud_disk_slave");
     AUTO_REL_DBCONN(db_manager, db_conn);
     CacheManager *cache_manager = CacheManager::getInstance();
     CacheConn *cache_conn = cache_manager->GetCacheConn("token");

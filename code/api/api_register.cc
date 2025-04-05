@@ -86,7 +86,7 @@ int registerUser(string &user_name, string &nick_name, string &pwd,
     int ret = 0;
     uint32_t user_id;
     CDBManager *db_manager = CDBManager::getInstance();
-    CDBConn *db_conn = db_manager->GetDBConn("tuchuang_slave");
+    CDBConn *db_conn = db_manager->GetDBConn("cloud_disk_slave");
     AUTO_REL_DBCONN(db_manager, db_conn);
     // 先查看用户是否存在
     string str_sql;

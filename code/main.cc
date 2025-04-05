@@ -132,15 +132,16 @@ int main(int argc, char *argv[]) {
     if(argc > 1) {
         str_tc_http_server_conf = argv[1];  // 指向配置文件路径
     } else {
-        str_tc_http_server_conf = (char *)"tc_http_server.conf";
+        str_tc_http_server_conf = (char *)"./source/cloud-disk.conf";
     }
-    
+
      // 读取配置文件
     CConfigFileReader config_file(str_tc_http_server_conf);     //读取配置文件
 
     //读取网络框架的配置  目前是epoll + io线程 + 业务线程
     char *http_bind_ip = config_file.GetConfigName("http_bind_ip");
     char *str_http_bind_port = config_file.GetConfigName("http_bind_port");        //8081 -- nginx.conf,当前服务的端口
+    std::cout << "http_bind_port: " << str_http_bind_port << std::endl;
     uint16_t http_bind_port = atoi(str_http_bind_port);
     char *str_num_event_loops = config_file.GetConfigName("num_event_loops");  
     int num_event_loops = atoi(str_num_event_loops);
@@ -154,15 +155,6 @@ int main(int argc, char *argv[]) {
     //Logger::LogLevel log_level = static_cast<Logger::LogLevel>(atoi(str_log_level));
     //Logger::setLogLevel(log_level);
 
-
-
-     // 短链主要是将图片链接转成短链 这个版本暂时先不用短链
-    char *str_enable_shorturl = config_file.GetConfigName("enable_shorturl");
-    uint16_t enable_shorturl = atoi(str_enable_shorturl);   //1开启短链，0不开启短链
-    char *shorturl_server_address = config_file.GetConfigName("shorturl_server_address");// 短链服务地址
-    char *shorturl_server_access_token = config_file.GetConfigName("shorturl_server_access_token");
-
-    
     char *dfs_path_client = config_file.GetConfigName("dfs_path_client"); // /etc/fdfs/client.conf
     char *storage_web_server_ip = config_file.GetConfigName("storage_web_server_ip"); //后续可以配置域名
     char *storage_web_server_port = config_file.GetConfigName("storage_web_server_port");
@@ -183,12 +175,7 @@ int main(int argc, char *argv[]) {
     }
 
     // 将配置文件的参数传递给对应模块
-    if(enable_shorturl == 1) {
-        ApiUploadInit(dfs_path_client, storage_web_server_ip, storage_web_server_port, shorturl_server_address,
-        shorturl_server_access_token);
-    } else {
-        ApiUploadInit(dfs_path_client, storage_web_server_ip, storage_web_server_port, "", "");
-    }
+    ApiUploadInit(dfs_path_client, storage_web_server_ip, storage_web_server_port, "", "");
     
     ret = ApiDealfileInit(dfs_path_client);
 

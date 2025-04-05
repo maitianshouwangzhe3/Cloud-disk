@@ -27,7 +27,7 @@ int decodeCountJson(string &str_json, string &user_name, string &token) {
 
     user_name = root["user"].GetString();
 
-    if (!root.HasMember("token") && !root["token"].IsString()) {
+    if (!root.HasMember("token") && !root["n"].IsString()) {
         return -1;
     }
     token = root["token"].GetString();
@@ -84,7 +84,7 @@ int getUserFilesCount(CDBConn *db_conn, CacheConn *cache_conn,
 
 int handleUserFilesCount(string &user_name, int &count) {
     CDBManager *db_manager = CDBManager::getInstance();
-    CDBConn *db_conn = db_manager->GetDBConn("tuchuang_slave");
+    CDBConn *db_conn = db_manager->GetDBConn("cloud_disk_slave");
     AUTO_REL_DBCONN(db_manager, db_conn);
     CacheManager *cache_manager = CacheManager::getInstance();
     CacheConn *cache_conn = cache_manager->GetCacheConn("token");
@@ -153,7 +153,7 @@ int getUserFileList(string &cmd, string &user_name, int &start, int &count, stri
     int total = 0;
     string str_sql;
     CDBManager *db_manager = CDBManager::getInstance();
-    CDBConn *db_conn = db_manager->GetDBConn("tuchuang_slave");
+    CDBConn *db_conn = db_manager->GetDBConn("cloud_disk_slave");
     AUTO_REL_DBCONN(db_manager, db_conn);
     CacheManager *cache_manager = CacheManager::getInstance();
     CacheConn *cache_conn = cache_manager->GetCacheConn("token");

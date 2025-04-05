@@ -1,4 +1,5 @@
 #include "api_sharefiles.h"
+#include "log.h"
 #include "redis_keys.h"
 #include "rapidjson/document.h"
 #include "rapidjson/writer.h"
@@ -45,7 +46,7 @@ int getShareFilesCount(CDBConn *db_conn, CacheConn *cache_conn, int &count) {
 //获取共享文件个数
 int handleGetSharefilesCount(int &count) {
     CDBManager *db_manager = CDBManager::getInstance();
-    CDBConn *db_conn = db_manager->GetDBConn("tuchuang_slave");
+    CDBConn *db_conn = db_manager->GetDBConn("cloud_disk_slave");
     AUTO_REL_DBCONN(db_manager, db_conn);
     CacheManager *cache_manager = CacheManager::getInstance();
     CacheConn *cache_conn = cache_manager->GetCacheConn("token");
@@ -101,7 +102,7 @@ void handleGetShareFilelist(int start, int count, string &str_json) {
     string str_sql;
     int total = 0;
     CDBManager *db_manager = CDBManager::getInstance();
-    CDBConn *db_conn = db_manager->GetDBConn("tuchuang_slave");
+    CDBConn *db_conn = db_manager->GetDBConn("cloud_disk_slave");
     AUTO_REL_DBCONN(db_manager, db_conn);
     CacheManager *cache_manager = CacheManager::getInstance();
     CacheConn *cache_conn = cache_manager->GetCacheConn("token");
@@ -144,7 +145,7 @@ void handleGetShareFilelist(int start, int count, string &str_json) {
             writer.Key("file_name");
             writer.String(result_set->GetString("file_name"));
             writer.Key("share_status");
-            writer.Int(result_set->GetInt("share_status"));
+            writer.Int(1);
             writer.Key("pv");
             writer.Int(result_set->GetInt("pv"));
             writer.Key("create_time");
@@ -192,10 +193,8 @@ void handleGetRankingFilelist(int start, int count, string &str_json) {
     int ret = 0;
     char sql_cmd[SQL_MAX_LEN] = {0};
     int total = 0;
-    char filename[1024] = {0};
     int sql_num;
     int redis_num;
-    int score;
     int end;
     RVALUES value = NULL;
     rapidjson::StringBuffer buffer;
@@ -204,7 +203,7 @@ void handleGetRankingFilelist(int start, int count, string &str_json) {
     int file_count = 0;
 
     CDBManager *db_manager = CDBManager::getInstance();
-    CDBConn *db_conn = db_manager->GetDBConn("tuchuang_slave");
+    CDBConn *db_conn = db_manager->GetDBConn("cloud_disk_slave");
     AUTO_REL_DBCONN(db_manager, db_conn);
     CResultSet *pCResultSet = NULL;
 
@@ -303,6 +302,15 @@ void handleGetRankingFilelist(int start, int count, string &str_json) {
             "pv": 0
         }
         */
+        char filename[1024] = {0};
+        ret = cache_conn->Hget(FILE_NAME_HASH, value[i], filename); // 通过 文件md5+文件名 -> 获取文件名
+        if (ret != 0) {
+            LOG_ERROR("hget  操作失败");
+            continue;
+        }
+
+        int score = cache_conn->ZsetGetScore(FILE_PUBLIC_ZSET, value[i]);
+
         writer.StartObject();
         writer.Key("filename");
         writer.String(filename);
